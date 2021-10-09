@@ -14,40 +14,40 @@ connectDB()
 const importData = async () => {
   try {
     await Room.deleteMany()
-    // await User.deleteMany()
-    //
-    // //creating Admin
-    // const admin = new User({
-    //   name: 'Admin',
-    //   email: 'admin@gmail.com',
-    //   password: '4321',
-    //   isAdmin: true,
-    // })
-    //
-    // const createdAdmin = await admin.save()
-    // const adminUuid = createdAdmin._id
-    //
-    // console.log('Admin'.green, adminUuid)
-    // console.log('--------------------------------'.yellow)
-    //
-    // //creating of 5 users
-    // for (let i = 1; i < 6; i++) {
-    //   const name = faker.name.findName()
-    //   const email = (name + '@gmail.com').split(' ').join('')
-    //
-    //   const user = new User({
-    //     name,
-    //     email: email.toLowerCase(),
-    //     password: '1234',
-    //     isAdmin: false,
-    //   })
-    //
-    //   const createdUser = await user.save()
-    //   const userUuid = createdUser._id
-    //
-    //   console.log(`User #${i}`.cyan, userUuid)
-    // }
-    // console.log('--------------------------------'.yellow)
+    await User.deleteMany()
+
+    //creating Admin
+    const admin = new User({
+      name: 'Admin',
+      email: 'admin@gmail.com',
+      password: '4321',
+      isAdmin: true,
+    })
+
+    const createdAdmin = await admin.save()
+    const adminUuid = createdAdmin._id
+
+    console.log('Admin'.green, adminUuid)
+    console.log('--------------------------------'.yellow)
+
+    //creating of 5 users
+    for (let i = 1; i < 6; i++) {
+      const name = faker.name.findName()
+      const email = (name + '@gmail.com').split(' ').join('')
+
+      const user = new User({
+        name,
+        email: email.toLowerCase(),
+        password: '1234',
+        isAdmin: false,
+      })
+
+      const createdUser = await user.save()
+      const userUuid = createdUser._id
+
+      console.log(`User #${i}`.cyan, userUuid)
+    }
+    console.log('--------------------------------'.yellow)
 
     const accommodation = ['Single', 'Double', 'Triple', 'Extra Bed']
     const comfort = ['Suite', 'De Luxe', 'Duplex', 'Studio', 'Standart']
@@ -55,7 +55,7 @@ const importData = async () => {
       'location_city',
       'wifi',
       'bathtub',
-      'as_unit',
+      'ac_unit',
       'family_restroom',
       'fitness_center',
       'smoke_free',
@@ -86,8 +86,8 @@ const importData = async () => {
         amenities: _.sampleSize(
           amenities,
           faker.datatype.number({
-            min: 5,
-            max: 11,
+            min: 4,
+            max: 8,
           })
         ),
         description: faker.lorem.paragraphs(),

@@ -26,7 +26,7 @@ export const roomListReducer = (state = { rooms: [] }, action) => {
 }
 
 export const roomDetailsReducer = (
-  state = { room: { imageUrls: [], currentBookings: [] } },
+  state = { room: { imageUrls: [], currentBookings: [], amenities: [] } },
   action
 ) => {
   switch (action.type) {

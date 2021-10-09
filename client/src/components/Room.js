@@ -59,17 +59,13 @@ const Room = ({ room, fromdate, todate }) => {
               <b>Rent per Day:</b> ${room.rentPerDay}
             </ListGroup.Item>
             <ListGroup.Item>
-              <span className="material-icon-outlined">location_city</span>
-              <span className="material-icon-outlined">wifi</span>
-              <span className="material-icon-outlined">bathtub</span>
-              <span className="material-icon-outlined">as_unit</span>
-              <span className="material-icon-outlined">family_restroom</span>
-              <span className="material-icon-outlined">fitness_center</span>
-              <span className="material-icon-outlined">smoke_free</span>
-              <span className="material-icon-outlined">wine_bar</span>
-              <span className="material-icon-outlined">local_parking</span>
-              <span className="material-icon-outlined">coffee_maker</span>
-              <span className="material-icon-outlined">accessible</span>
+              {room.amenities.map((element) => {
+                return (
+                  <span className="material-icons" key={element}>
+                    {element}
+                  </span>
+                )
+              })}
             </ListGroup.Item>
           </ListGroup>
           <hr />
