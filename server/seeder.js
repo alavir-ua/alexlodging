@@ -52,17 +52,17 @@ const importData = async () => {
     const accommodation = ['Single', 'Double', 'Triple', 'Extra Bed']
     const comfort = ['Suite', 'De Luxe', 'Duplex', 'Studio', 'Standart']
     const amenities = [
-      'mdiCity',
-      'mdiWifi',
-      'mdiShower',
-      'mdiSnowflake',
-      'mdiHumanMaleFemaleChild',
-      'mdiDumbbell',
-      'mdiSmokingOff',
-      'mdiGlassCocktail',
-      'mdiAlphaPBoxOutline',
-      'mdiCoffeeMaker',
-      'mdiHumanWheelchair',
+      'location_city',
+      'wifi',
+      'bathtub',
+      'as_unit',
+      'family_restroom',
+      'fitness_center',
+      'smoke_free',
+      'wine_bar',
+      'local_parking',
+      'coffee_maker',
+      'accessible',
     ]
 
     let idx = 0
