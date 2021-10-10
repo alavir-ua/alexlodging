@@ -61,7 +61,11 @@ const Room = ({ room, fromdate, todate }) => {
             <ListGroup.Item>
               {room.amenities.map((element) => {
                 return (
-                  <span className="material-icons" key={element}>
+                  <span
+                    className="material-icons"
+                    key={element}
+                    title={element}
+                  >
                     {element}
                   </span>
                 )
