@@ -1,6 +1,6 @@
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-#Accommodation booking application built with MERN stack
+# Accommodation booking application built with MERN stack
 
 An example of a complex application with React, Redux, Express and MongoDB
 
