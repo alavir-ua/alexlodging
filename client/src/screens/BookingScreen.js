@@ -34,7 +34,7 @@ const BookingScreen = ({ match }) => {
   const toDate = moment(match.params.todate, 'YYYY-MM-DD')
 
   const totalDays = moment.duration(toDate.diff(fromDate)).asDays() + 1
-  const totalAmount = totalDays * room.rentPerDay
+  const totalAmount = Math.trunc(totalDays * room.rentPerDay)
 
   useEffect(() => {
     if (!room._id || room._id !== match.params.roomid) {
@@ -60,10 +60,6 @@ const BookingScreen = ({ match }) => {
     }
     dispatch(createBooking(bookingDetails))
   }
-
-  /*const fullAddress = async function (room) {
-    return <p>{room.address.city + ',' + room.address.street}</p>
-  }*/
 
   return (
     <>

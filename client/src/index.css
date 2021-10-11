@@ -10,7 +10,6 @@ body {
 }
 
 header, footer {
-	/*background-color: #008cba;*/
 	background-color: #00004d;
 	color: white;
 }
@@ -25,9 +24,9 @@ h1,h2,h3,h4,h5,h6,label,hr {
 
 .bs {
 	box-shadow: rgba(0, 0, 0, 0.75) 0 5px 15px;
-	margin-top: 20px !important;
-	border-radius: 5px !important;
-	padding: 20px !important;
+	margin-top: 20px;
+	border-radius: 5px;
+	padding: 20px;
 }
 
 .btn {
@@ -41,7 +40,7 @@ h1,h2,h3,h4,h5,h6,label,hr {
 }
 
 input {
-	border-radius: 5px !important;
+	border-radius: 5px;
 }
 
 .alert {
@@ -84,6 +83,7 @@ input {
 .material-icons {
 	color: #00004d;
 }
+
 
 
 

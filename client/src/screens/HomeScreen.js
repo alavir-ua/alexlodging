@@ -8,8 +8,7 @@ import Paginate from '../components/Paginate'
 import Meta from '../components/Meta'
 import moment from 'moment'
 import { listRooms } from '../actions/roomActions'
-import { DatePicker } from 'antd'
-const { RangePicker } = DatePicker
+import { DateRangePicker } from 'rsuite'
 
 const HomeScreen = ({ match }) => {
   const [fromDate, setFromDate] = useState('')
@@ -27,14 +26,16 @@ const HomeScreen = ({ match }) => {
   }, [dispatch, pageNumber, fromDate, toDate])
 
   const datesRangeSet = (dates) => {
-    if (dates !== null) {
-      setFromDate(moment(dates[0]).format('YYYY-MM-DD'))
-      setToDate(moment(dates[1]).format('YYYY-MM-DD'))
-    } else {
-      setFromDate('')
-      setToDate('')
-    }
+    setFromDate(moment(dates[0]).format('YYYY-MM-DD'))
+    setToDate(moment(dates[1]).format('YYYY-MM-DD'))
   }
+
+  const styles = {
+    width: 'auto',
+    display: 'block',
+    marginBottom: 10,
+  }
+  const { beforeToday } = DateRangePicker
 
   return (
     <>
@@ -51,7 +52,15 @@ const HomeScreen = ({ match }) => {
       />
       <Row className="mt-4">
         <Col md={3}>
-          <RangePicker format="YYYY-MM-DD" onChange={datesRangeSet} />
+          <DateRangePicker
+            size="lg"
+            format="yyyy-MM-dd"
+            disabledDate={beforeToday()}
+            onChange={datesRangeSet}
+            placeholder="Select Date Range"
+            style={styles}
+            ranges={[]}
+          />
         </Col>
         <Col></Col>
         <Col></Col>
