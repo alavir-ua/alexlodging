@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Room from '../components/Room'
+import DatePicker from '../components/DatePicker'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import Meta from '../components/Meta'
-import moment from 'moment'
 import { listRooms } from '../actions/roomActions'
-import { DateRangePicker } from 'rsuite'
 
 const HomeScreen = ({ match }) => {
   const [fromDate, setFromDate] = useState('')
@@ -25,17 +24,10 @@ const HomeScreen = ({ match }) => {
     dispatch(listRooms(pageNumber, fromDate, toDate))
   }, [dispatch, pageNumber, fromDate, toDate])
 
-  const datesRangeSet = (dates) => {
-    setFromDate(moment(dates[0]).format('YYYY-MM-DD'))
-    setToDate(moment(dates[1]).format('YYYY-MM-DD'))
+  const setDatesRange = (dates) => {
+    setFromDate(dates[0])
+    setToDate(dates[1])
   }
-
-  const styles = {
-    width: 'auto',
-    display: 'block',
-    marginBottom: 10,
-  }
-  const { beforeToday } = DateRangePicker
 
   return (
     <>
@@ -52,15 +44,7 @@ const HomeScreen = ({ match }) => {
       />
       <Row className="mt-4">
         <Col md={3}>
-          <DateRangePicker
-            size="lg"
-            format="yyyy-MM-dd"
-            disabledDate={beforeToday()}
-            onChange={datesRangeSet}
-            placeholder="Select Date Range"
-            style={styles}
-            ranges={[]}
-          />
+          <DatePicker setDatesRange={setDatesRange} />
         </Col>
         <Col></Col>
         <Col></Col>
