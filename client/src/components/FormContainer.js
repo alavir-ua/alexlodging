@@ -10,7 +10,7 @@ const FormContainer = ({ children }) => {
   return (
     <Container>
       <Row
-        className="justify-content-md-center bs"
+        className="justify-content-md-center al-box-shadow"
         data-aos="zoom-in"
         style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
       >

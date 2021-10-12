@@ -10,7 +10,7 @@ AOS.init({
 
 const LandingScreen = () => {
   return (
-    <div className="landing">
+    <>
       <Meta
         style="
        main {
@@ -41,7 +41,7 @@ const LandingScreen = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

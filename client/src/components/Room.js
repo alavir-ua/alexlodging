@@ -36,7 +36,7 @@ const Room = ({ room, fromdate, todate }) => {
 
   return (
     <div
-      className="bs"
+      className="al-box-shadow"
       data-aos="zoom-in"
       style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
     >
@@ -103,7 +103,7 @@ const Room = ({ room, fromdate, todate }) => {
               return (
                 <Carousel.Item>
                   <img
-                    className="d-block w-100 bigimg"
+                    className="d-block w-100 al-big-image"
                     src={url}
                     alt="First slide"
                   />

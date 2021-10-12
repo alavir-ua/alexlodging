@@ -80,7 +80,7 @@ const BookingScreen = ({ match }) => {
         <Message variant="danger">{error || bookingCreateError}</Message>
       ) : (
         <Row
-          className="bs"
+          className="al-box-shadow"
           data-aos="zoom-in"
           style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
         >

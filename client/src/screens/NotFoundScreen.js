@@ -25,22 +25,10 @@ const NotFoundScreen = ({ history }) => {
     "
       />
       <Col>
-        <div className="not-found bs">
-          <span
-            style={{
-              color: '#00004d',
-              fontSize: '10rem',
-            }}
-          >
-            404
-          </span>
+        <div className="al-not-found al-box-shadow">
+          <span>404</span>
           <h2>Page {location.pathname} not found...</h2>
-          <Button
-            onClick={(e) => clickHandler(e)}
-            style={{ marginTop: '2rem' }}
-          >
-            Back Home
-          </Button>
+          <Button onClick={(e) => clickHandler(e)}>Back Home</Button>
         </div>
       </Col>
     </Row>

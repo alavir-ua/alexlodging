@@ -18,11 +18,11 @@ h1,h2,h3,h4,h5,h6,label,hr {
 	color: #00004d;
 }
 
-.nav {
+.al-nav {
 	margin-left: auto;
 }
 
-.bs {
+.al-box-shadow {
 	box-shadow: rgba(0, 0, 0, 0.75) 0 5px 15px;
 	margin-top: 20px;
 	border-radius: 5px;
@@ -43,35 +43,39 @@ input {
 	border-radius: 5px;
 }
 
-.alert {
-	border-radius: 5px !important;
+.al-alert {
+	border-radius: 5px;
 }
 
-.bigimg {
+.al-big-image {
 	height: 400px;
 	border-radius: 5px;
 }
 
+/*don`t change class name!*/
 .page-link {
 	background-color: #00004d;
 	color: white;
 }
 
+/*don`t change class name!*/
 .page-link:hover {
 	background-color: #0000e6;
 	color:white;
 }
 
+/*don`t change class name!*/
 .alert-danger {
 	background-color: rgba(255, 0, 0, 0.7);
 	color: #0000e6;
 }
 
+/*don`t change class name!*/
 .dropdown-item {
 	color:  #00004d
 }
 
-.not-found {
+.al-not-found {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -80,6 +84,16 @@ input {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
+.al-not-found span {
+	color: #00004d;
+	font-size: 10rem;
+}
+
+.al-not-found button{
+	margin-top: 2rem;
+}
+
+/*don`t change class name!*/
 .material-icons {
 	color: #00004d;
 }

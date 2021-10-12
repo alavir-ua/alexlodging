@@ -42,12 +42,12 @@ const HomeScreen = ({ match }) => {
         }
     "
       />
-      <Row className="mt-4">
-        <Col md={3}>
+      <Row className="mt-4 al-box-shadow">
+        <Col md={4}>
           <DatePicker setDatesRange={setDatesRange} />
         </Col>
-        <Col></Col>
-        <Col></Col>
+        <Col md={4}></Col>
+        <Col md={4}></Col>
       </Row>
       {loading ? (
         <Loader />
