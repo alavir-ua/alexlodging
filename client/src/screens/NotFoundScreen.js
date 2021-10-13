@@ -8,7 +8,7 @@ const NotFoundScreen = ({ history }) => {
 
   const clickHandler = (e) => {
     e.preventDefault()
-    history.push('/')
+    history.push('/home')
   }
 
   return (

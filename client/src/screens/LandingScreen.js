@@ -22,20 +22,10 @@ const LandingScreen = () => {
     "
         title="Landing"
       />
-      <div className="landing row justify-content-center text-center mt-5">
-        <div className="col-md-9 my-auto">
-          <h1
-            style={{
-              fontSize: '90px',
-              marginBottom: '30px',
-            }}
-            data-aos="zoom-in"
-          >
-            Alex Lodging
-          </h1>
-          <h2 style={{ marginBottom: '40px' }} data-aos="zoom-out">
-            "Your comfort at an affordable price"
-          </h2>
+      <div className="row justify-content-center text-center mt-5">
+        <div className="col-md-9 my-auto al-landing">
+          <h1 data-aos="zoom-in">Alex Lodging</h1>
+          <h2 data-aos="zoom-out">"Your comfort at an affordable price"</h2>
           <Link to="/home">
             <button className="btn btn-primary mt-3">Get Started</button>
           </Link>

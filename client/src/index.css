@@ -22,11 +22,24 @@ h1,h2,h3,h4,h5,h6,label,hr {
 	margin-left: auto;
 }
 
+.al-landing h1 {
+	font-size: 90px;
+	margin-bottom: 30px;
+}
+
+.al-landing h2 {
+	margin-bottom: 40px;
+}
+
 .al-box-shadow {
 	box-shadow: rgba(0, 0, 0, 0.75) 0 5px 15px;
 	margin-top: 20px;
 	border-radius: 5px;
 	padding: 20px;
+}
+
+.al-search-box input {
+  height: 43px;
 }
 
 .btn {
@@ -35,12 +48,12 @@ h1,h2,h3,h4,h5,h6,label,hr {
 	border-radius: 5px;
 }
 
-.btn:hover {
-	background-color: #0000e6;
-}
-
 input {
 	border-radius: 5px;
+}
+
+.btn:hover {
+	background-color: #0000e6;
 }
 
 .al-alert {

@@ -7,7 +7,6 @@ const DatePicker = ({ setDatesRange }) => {
   const styles = {
     width: 'auto',
     display: 'block',
-    marginBottom: 10,
   }
 
   const setDates = (data) => {
