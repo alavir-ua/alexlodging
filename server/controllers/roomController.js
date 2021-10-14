@@ -12,8 +12,17 @@ const getRooms = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1
   const pageSize = 5
 
+  const keyword = req.query.keyword
+    ? {
+        hotelName: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+
   if (from_date || to_date) {
-    const roomsData = await Room.find({})
+    const roomsData = await Room.find({ ...keyword })
 
     let tempRooms = []
 
@@ -43,9 +52,9 @@ const getRooms = asyncHandler(async (req, res) => {
     const rooms = tempRooms.slice(pageSize * page - pageSize, pageSize * page)
     res.json({ rooms, page, pages: Math.ceil(tempRooms.length / pageSize) })
   } else {
-    const count = await Room.countDocuments({})
+    const count = await Room.countDocuments({ ...keyword })
 
-    const rooms = await Room.find({})
+    const rooms = await Room.find({ ...keyword })
       .sort({ createdAt: -1 })
       .limit(pageSize)
       .skip(pageSize * (page - 1))

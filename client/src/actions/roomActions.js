@@ -9,13 +9,13 @@ import {
 } from '../constants/roomConstants'
 
 export const listRooms =
-  (pageNumber = '', fromdate = '', todate = '') =>
+  (pageNumber = '', keyword = '', fromdate = '', todate = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: ROOM_LIST_REQUEST })
 
       const { data } = await axios.get(
-        `/api/rooms?pageNumber=${pageNumber}&fromdate=${fromdate}&todate=${todate}`
+        `/api/rooms?pageNumber=${pageNumber}&keyword=${keyword}&fromdate=${fromdate}&todate=${todate}`
       )
 
       dispatch({

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
+import { Route } from 'react-router-dom'
 import Room from '../components/Room'
 import DatePicker from '../components/DatePicker'
 import SearchBox from '../components/SearchBox'
@@ -15,6 +16,7 @@ const HomeScreen = ({ match }) => {
   const [toDate, setToDate] = useState('')
 
   const pageNumber = match.params.pageNumber || 1
+  const keyword = match.params.keyword
 
   const dispatch = useDispatch()
 
@@ -22,16 +24,12 @@ const HomeScreen = ({ match }) => {
   const { loading, error, rooms, page, pages } = stateRoomList
 
   useEffect(() => {
-    dispatch(listRooms(pageNumber, fromDate, toDate))
-  }, [dispatch, pageNumber, fromDate, toDate])
+    dispatch(listRooms(pageNumber, keyword, fromDate, toDate))
+  }, [dispatch, pageNumber, keyword, fromDate, toDate])
 
   const setDatesRange = (dates) => {
     setFromDate(dates[0])
     setToDate(dates[1])
-  }
-
-  const setSearchKeyword = (keyword) => {
-    console.log(keyword)
   }
 
   return (
@@ -52,7 +50,7 @@ const HomeScreen = ({ match }) => {
           <DatePicker setDatesRange={setDatesRange} />
         </Col>
         <Col md={4}>
-          <SearchBox setSearchKeyword={setSearchKeyword} />
+          <Route render={({ history }) => <SearchBox history={history} />} />
         </Col>
         <Col md={4}></Col>
       </Row>
@@ -72,7 +70,11 @@ const HomeScreen = ({ match }) => {
               />
             ))}
           </Row>
-          <Paginate pages={pages} page={page} />
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ''}
+          />
         </>
       )}
     </>

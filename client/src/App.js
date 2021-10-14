@@ -26,7 +26,13 @@ const App = () => {
               component={BookingScreen}
               exact
             />
+            <Route path="/home/search/:keyword" component={HomeScreen} exact />
             <Route path="/home/page/:pageNumber" component={HomeScreen} exact />
+            <Route
+              path="/home/search/:keyword/page/:pageNumber"
+              component={HomeScreen}
+              exact
+            />
             <Route component={NotFoundScreen} />
           </Switch>
         </Container>

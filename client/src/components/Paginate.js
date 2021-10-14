@@ -2,9 +2,13 @@ import React from 'react'
 import { Pagination } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
-const Paginate = ({ pages, page }) => {
+const Paginate = ({ pages, page, keyword = '' }) => {
   const link = (x) => {
-    return `/home/page/${x + 1}`
+    if (keyword) {
+      return `/home/search/${keyword}/page/${x + 1}`
+    } else {
+      return `/home/page/${x + 1}`
+    }
   }
 
   return (
