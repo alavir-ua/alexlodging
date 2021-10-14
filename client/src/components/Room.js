@@ -35,11 +35,7 @@ const Room = ({ room, fromdate, todate }) => {
   }
 
   return (
-    <div
-      className="al-box-shadow"
-      data-aos="zoom-in"
-      style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-    >
+    <div className="al-room-box al-box-shadow" data-aos="zoom-in">
       <Row>
         <Col md={4}>
           <Image src={room.imageUrls[0]} alt={room.hotelName} fluid />
@@ -73,7 +69,7 @@ const Room = ({ room, fromdate, todate }) => {
             </ListGroup.Item>
           </ListGroup>
           <hr />
-          <div style={{ float: 'right' }}>
+          <div className="al-room__btn-group">
             {fromdate && todate && (
               <Button className="btn btn-dark m-2" onClick={bookRoom}>
                 Book Now

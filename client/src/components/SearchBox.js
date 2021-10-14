@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
-import { InputGroup, FormControl, Form, Button } from 'react-bootstrap'
+import { InputGroup, FormControl, Button } from 'react-bootstrap'
 
-const SearchBox = ({ history }) => {
+const SearchBox = ({ setSearchKeyword }) => {
   const [keyword, setKeyword] = useState('')
 
-  const searchHandler = (e) => {
-    e.preventDefault()
-    if (keyword.trim()) {
-      history.push(`/search/${keyword}`)
-    } else {
-      history.push('/home')
-    }
+  const searchHandler = () => {
+    setSearchKeyword(keyword)
   }
 
   return (

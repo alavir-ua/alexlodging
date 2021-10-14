@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
-import { Route } from 'react-router-dom'
 import Room from '../components/Room'
 import DatePicker from '../components/DatePicker'
 import SearchBox from '../components/SearchBox'
@@ -31,6 +30,10 @@ const HomeScreen = ({ match }) => {
     setToDate(dates[1])
   }
 
+  const setSearchKeyword = (keyword) => {
+    console.log(keyword)
+  }
+
   return (
     <>
       <Meta
@@ -49,7 +52,7 @@ const HomeScreen = ({ match }) => {
           <DatePicker setDatesRange={setDatesRange} />
         </Col>
         <Col md={4}>
-          <Route render={({ history }) => <SearchBox history={history} />} />
+          <SearchBox setSearchKeyword={setSearchKeyword} />
         </Col>
         <Col md={4}></Col>
       </Row>
