@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap'
 import { Route } from 'react-router-dom'
 import Room from '../components/Room'
 import DatePicker from '../components/DatePicker'
+import SideFilter from '../components/SideFilter'
 import SearchBox from '../components/SearchBox'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -45,14 +46,15 @@ const HomeScreen = ({ match }) => {
         }
     "
       />
+      <SideFilter />
       <Row className="mt-4 al-box-shadow">
         <Col md={4}>
           <DatePicker setDatesRange={setDatesRange} />
         </Col>
+        <Col md={4}></Col>
         <Col md={4}>
           <Route render={({ history }) => <SearchBox history={history} />} />
         </Col>
-        <Col md={4}></Col>
       </Row>
       {loading ? (
         <Loader />

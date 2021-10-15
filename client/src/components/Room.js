@@ -95,13 +95,14 @@ const Room = ({ room, fromdate, todate }) => {
         </Modal.Header>
         <Modal.Body>
           <Carousel prevLabel="" nextLabel="">
-            {room.imageUrls.map((url) => {
+            {room.imageUrls.map((url, idx) => {
               return (
                 <Carousel.Item>
                   <img
                     className="d-block w-100 al-big-image"
                     src={url}
                     alt="First slide"
+                    key={idx}
                   />
                 </Carousel.Item>
               )
