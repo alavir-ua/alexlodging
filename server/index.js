@@ -20,6 +20,7 @@ connectDB()
 import roomRoutes from './routes/roomRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import bookingRoutes from './routes/bookingRoutes.js'
+import stripePayRoutes from './routes/stripePayRoutes.js'
 
 app.use(express.json())
 app.use(expressValidator())
@@ -27,6 +28,7 @@ app.use(expressValidator())
 app.use('/api/rooms', roomRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/booking', bookingRoutes)
+app.use('/api/stripe', stripePayRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')))

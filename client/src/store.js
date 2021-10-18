@@ -7,9 +7,15 @@ import {
   userRegisterReducer,
   userDetailsReducer,
 } from './reducers/userReducers'
-
+import {
+  bookingCreateReducer,
+  bookingDetailsReducer,
+  bookingPayReducer,
+  bookingListMyReducer,
+  bookingListReducer,
+} from './reducers/bookingReducer'
+import { stripePayReducer } from './reducers/stripeReducers'
 import { roomListReducer, roomDetailsReducer } from './reducers/roomReducers'
-import { bookingCreateReducer } from './reducers/bookingReducer'
 
 const reducer = combineReducers({
   roomList: roomListReducer,
@@ -18,6 +24,11 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   bookingCreate: bookingCreateReducer,
+  bookingDetails: bookingDetailsReducer,
+  bookingPay: bookingPayReducer,
+  bookingListMy: bookingListMyReducer,
+  bookingList: bookingListReducer,
+  stripePay: stripePayReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
