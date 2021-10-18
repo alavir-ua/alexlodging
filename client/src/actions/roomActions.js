@@ -9,13 +9,27 @@ import {
 } from '../constants/roomConstants'
 
 export const listRooms =
-  (pageNumber = '', keyword = '', fromdate = '', todate = '') =>
+  (
+    pageNumber = '',
+    keyword = '',
+    fromdate = '',
+    todate = '',
+    filterData = {}
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: ROOM_LIST_REQUEST })
 
-      const { data } = await axios.get(
-        `/api/rooms?pageNumber=${pageNumber}&keyword=${keyword}&fromdate=${fromdate}&todate=${todate}`
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+
+      const { data } = await axios.post(
+        `/api/rooms?pageNumber=${pageNumber}&keyword=${keyword}&fromdate=${fromdate}&todate=${todate}`,
+        filterData,
+        config
       )
 
       dispatch({

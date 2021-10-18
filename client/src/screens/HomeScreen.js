@@ -11,10 +11,16 @@ import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import Meta from '../components/Meta'
 import { listRooms } from '../actions/roomActions'
+import moment from 'moment'
 
 const HomeScreen = ({ match }) => {
   const [fromDate, setFromDate] = useState('')
   const [toDate, setToDate] = useState('')
+  const [filterData, setFilterData] = useState({
+    accomodType: '',
+    comfortType: '',
+    maxCost: 1000,
+  })
 
   const pageNumber = match.params.pageNumber || 1
   const keyword = match.params.keyword
@@ -25,12 +31,24 @@ const HomeScreen = ({ match }) => {
   const { loading, error, rooms, page, pages } = stateRoomList
 
   useEffect(() => {
-    dispatch(listRooms(pageNumber, keyword, fromDate, toDate))
-  }, [dispatch, pageNumber, keyword, fromDate, toDate])
+    dispatch(listRooms(pageNumber, keyword, fromDate, toDate, filterData))
+  }, [dispatch, pageNumber, keyword, fromDate, toDate, filterData])
 
   const setDatesRange = (dates) => {
-    setFromDate(dates[0])
-    setToDate(dates[1])
+    if (
+      dates[0] === moment(new Date()).format('YYYY-MM-DD') &&
+      dates[1] === moment(new Date()).format('YYYY-MM-DD')
+    ) {
+      setFromDate('')
+      setToDate('')
+    } else {
+      setFromDate(dates[0])
+      setToDate(dates[1])
+    }
+  }
+
+  const setFilter = (data) => {
+    setFilterData(data)
   }
 
   return (
@@ -46,7 +64,7 @@ const HomeScreen = ({ match }) => {
         }
     "
       />
-      <SideFilter />
+      <SideFilter setFilter={setFilter} />
       <Row className="mt-4 al-box-shadow">
         <Col md={4}>
           <DatePicker setDatesRange={setDatesRange} />

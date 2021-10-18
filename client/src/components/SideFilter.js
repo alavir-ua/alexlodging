@@ -3,17 +3,36 @@ import { Sidenav, Toggle } from 'rsuite'
 import { Form, Button } from 'react-bootstrap'
 import RangeSlider from 'react-bootstrap-range-slider'
 
-const SideFilter = () => {
+const SideFilter = ({ setFilter }) => {
   const [expanded, setExpanded] = useState(false)
   const [accomodType, setAccomodType] = useState('')
   const [comfortType, setComfortType] = useState('')
-  const [value, setValue] = useState(1000)
+  const [maxCost, setMaxCost] = useState(1000)
 
-  const accommodation = ['Single', 'Double', 'Triple', 'Extra Bed']
-  const comfort = ['Suite', 'De Luxe', 'Duplex', 'Studio', 'Standart']
+  const accommodation = ['All', 'Single', 'Double', 'Triple', 'Extra Bed']
+  const comfort = ['All', 'Suite', 'De Luxe', 'Duplex', 'Studio', 'Standart']
 
   const submitHandler = (e) => {
     e.preventDefault()
+    setExpanded(false)
+  }
+
+  const resetValues = () => {
+    setAccomodType('All')
+    setComfortType('All')
+    setMaxCost(1000)
+    setFilterData()
+  }
+
+  const setFilterData = () => {
+    const accomod_type = accomodType === 'All' ? '' : accomodType
+    const comfort_type = comfortType === 'All' ? '' : comfortType
+
+    setFilter({
+      accomodType: accomod_type,
+      comfortType: comfort_type,
+      maxCost,
+    })
   }
 
   return (
@@ -65,13 +84,17 @@ const SideFilter = () => {
               min={200}
               max={1000}
               step={10}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              value={maxCost}
+              onChange={(e) => setMaxCost(e.target.value)}
             />
           </Form.Group>
           <hr />
-          <Button type="submit">Search</Button>
-          <Button style={{ marginLeft: '5px' }}>Reset</Button>
+          <Button type="submit" onClick={setFilterData}>
+            Search
+          </Button>
+          <Button style={{ marginLeft: '5px' }} onClick={resetValues}>
+            Reset
+          </Button>
         </Form>
       </Sidenav>
     </div>

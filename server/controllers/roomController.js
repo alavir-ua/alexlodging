@@ -6,23 +6,55 @@ import moment from 'moment'
 // @route   GET /api/rooms/page/:pageNumber
 // @access  Public
 const getRooms = asyncHandler(async (req, res) => {
+  const { accomodType, comfortType, maxCost } = req.body
+
   const from_date = req.query.fromdate
   const to_date = req.query.todate
 
   const page = Number(req.query.pageNumber) || 1
   const pageSize = 5
 
-  const keyword = req.query.keyword
+  const filter = {
+    rentPerDay: { $lte: maxCost },
+    accommodationType:
+      accomodType === ''
+        ? {
+            $regex: /[A-Za-z]/,
+            $options: 'i',
+          }
+        : accomodType,
+    comfortType:
+      comfortType === ''
+        ? {
+            $regex: /[A-Za-z]/,
+            $options: 'i',
+          }
+        : comfortType,
+    hotelName:
+      req.query.keyword !== ''
+        ? {
+            $regex: req.query.keyword,
+            $options: 'i',
+          }
+        : {
+            $regex: /[A-Za-z]/,
+            $options: 'i',
+          },
+  }
+
+  //console.log(filter)
+
+  /*const keyword = req.query.keyword
     ? {
         hotelName: {
           $regex: req.query.keyword,
           $options: 'i',
         },
       }
-    : {}
+    : {}*/
 
   if (from_date || to_date) {
-    const roomsData = await Room.find({ ...keyword })
+    const roomsData = await Room.find({ ...filter })
 
     let tempRooms = []
 
@@ -52,9 +84,9 @@ const getRooms = asyncHandler(async (req, res) => {
     const rooms = tempRooms.slice(pageSize * page - pageSize, pageSize * page)
     res.json({ rooms, page, pages: Math.ceil(tempRooms.length / pageSize) })
   } else {
-    const count = await Room.countDocuments({ ...keyword })
+    const count = await Room.countDocuments({ ...filter })
 
-    const rooms = await Room.find({ ...keyword })
+    const rooms = await Room.find({ ...filter })
       .sort({ createdAt: -1 })
       .limit(pageSize)
       .skip(pageSize * (page - 1))

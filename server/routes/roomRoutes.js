@@ -10,7 +10,7 @@ import {
 } from '../controllers/roomController.js'
 //import { protect, admin } from '../middleware/authMiddleware.js'
 
-router.route('/').get(getRooms)
+router.route('/').post(getRooms)
 //.post(protect, admin, createQuiz)
 router.route('/:id').get(getRoomById)
 //.delete(protect, admin, deleteQuiz)
