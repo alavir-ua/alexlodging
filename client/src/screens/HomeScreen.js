@@ -78,7 +78,7 @@ const HomeScreen = ({ match }) => {
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
-      ) : (
+      ) : rooms.length !== 0 ? (
         <>
           <Row className="mb-4">
             {rooms.map((room) => (
@@ -96,6 +96,10 @@ const HomeScreen = ({ match }) => {
             keyword={keyword ? keyword : ''}
           />
         </>
+      ) : (
+        <Message variant="danger">
+          Ouch! There are no rooms for this request ...
+        </Message>
       )}
     </>
   )
