@@ -42,17 +42,6 @@ const getRooms = asyncHandler(async (req, res) => {
           },
   }
 
-  //console.log(filter)
-
-  /*const keyword = req.query.keyword
-    ? {
-        hotelName: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
-    : {}*/
-
   if (from_date || to_date) {
     const roomsData = await Room.find({ ...filter })
 

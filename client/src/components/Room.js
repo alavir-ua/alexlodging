@@ -9,7 +9,6 @@ import {
   Carousel,
 } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 AOS.init({
@@ -20,18 +19,12 @@ const Room = ({ room, fromdate, todate }) => {
   const history = useHistory()
   const [show, setShow] = useState(false)
 
-  const stateUserLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = stateUserLogin
-
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const bookRoom = () => {
-    if (!userInfo) {
-      alert('Please login to continue')
-    } else {
-      history.push(`/booking/${room._id}/${fromdate}/${todate}`)
-    }
+  const checkoutHandler = () => {
+    //history.push(`/booking/${room._id}/${fromdate}/${todate}`)
+    history.push('/login?redirect=shipping')
   }
 
   return (
@@ -71,8 +64,8 @@ const Room = ({ room, fromdate, todate }) => {
           <hr />
           <div className="al-room__btn-group">
             {fromdate && todate && (
-              <Button className="btn btn-dark m-2" onClick={bookRoom}>
-                Book Now
+              <Button className="btn btn-dark m-2" onClick={checkoutHandler}>
+                Proceed To Checkout
               </Button>
             )}
             <Button className="btn btn-dark m-2" onClick={handleShow}>

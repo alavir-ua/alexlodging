@@ -31,7 +31,7 @@ const CARD_OPTIONS = {
       iconColor: 'yellow',
       color: '#ffffff',
       fontWeight: 400,
-      fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+      fontFamily: 'Helvetica, sans-serif',
       fontSize: '16px',
       fontSmoothing: 'antialiased',
       ':-webkit-autofill': { color: '#fce883' },
@@ -44,7 +44,7 @@ const CARD_OPTIONS = {
   },
 }
 
-const OrderScreenStripe = ({ match, history }) => {
+const BookingScreenStripe = ({ match, history }) => {
   const orderId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -53,14 +53,11 @@ const OrderScreenStripe = ({ match, history }) => {
 
   const dispatch = useDispatch()
 
-  const orderDetails = useSelector((state) => state.orderDetails)
-  const { order, loading, error } = orderDetails
+  const bookingDetails = useSelector((state) => state.bookingDetails)
+  const { booking, loading, error } = bookingDetails
 
-  const orderPay = useSelector((state) => state.orderPay)
-  const { success: successPay } = orderPay
-
-  const orderDeliver = useSelector((state) => state.orderDeliver)
-  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+  const bookingPay = useSelector((state) => state.bookingPay)
+  const { success: successPay } = bookingPay
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -69,7 +66,7 @@ const OrderScreenStripe = ({ match, history }) => {
   const { loadingStripePay, stripePaymentError, stripePaymentResult } =
     stripePay
 
-  if (!loading) {
+  /*if (!loading) {
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2)
     }
@@ -77,7 +74,7 @@ const OrderScreenStripe = ({ match, history }) => {
     order.itemsPrice = addDecimals(
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     )
-  }
+  }*/
 
   const CheckoutForm = () => {
     const stripe = useStripe()
@@ -106,7 +103,7 @@ const OrderScreenStripe = ({ match, history }) => {
 
       if (!error) {
         const { id } = paymentMethod
-        dispatch(createStripePay(id, order))
+        dispatch(createStripePay(id, booking))
       } else {
         setCardError(error.message)
       }
@@ -158,7 +155,6 @@ const OrderScreenStripe = ({ match, history }) => {
     dispatch,
     orderId,
     successPay,
-    successDeliver,
     order,
     history,
     userInfo,
@@ -299,21 +295,6 @@ const OrderScreenStripe = ({ match, history }) => {
                   </ListGroup.Item>
                 </>
               )}
-              {loadingDeliver && <Loader />}
-              {userInfo &&
-                userInfo.isAdmin &&
-                order.isPaid &&
-                !order.isDelivered && (
-                  <ListGroup.Item>
-                    <Button
-                      type="button"
-                      className="btn btn-block"
-                      onClick={deliverHandler}
-                    >
-                      Mark As Delivered
-                    </Button>
-                  </ListGroup.Item>
-                )}
             </ListGroup>
           </Card>
         </Col>
