@@ -10,6 +10,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import Meta from '../components/Meta'
+import { removeFromStorage } from '../actions/storageActions'
 import { listRooms } from '../actions/roomActions'
 import moment from 'moment'
 
@@ -32,6 +33,7 @@ const HomeScreen = ({ match }) => {
 
   useEffect(() => {
     dispatch(listRooms(pageNumber, keyword, fromDate, toDate, filterData))
+    dispatch(removeFromStorage())
   }, [dispatch, pageNumber, keyword, fromDate, toDate, filterData])
 
   const setDatesRange = (dates) => {

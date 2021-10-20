@@ -8,7 +8,7 @@ import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import NotFoundScreen from './screens/NotFoundScreen'
 import HomeScreen from './screens/HomeScreen'
-import BookingScreen from './screens/BookingScreen'
+import BookingDetailsScreen from './screens/BookingDetailsScreen'
 
 const App = () => {
   return (
@@ -21,11 +21,7 @@ const App = () => {
             <Route path="/login" component={LoginScreen} exact />
             <Route path="/register" component={RegisterScreen} exact />
             <Route path="/home" component={HomeScreen} exact />
-            <Route
-              path="/booking/:roomid/:fromdate/:todate"
-              component={BookingScreen}
-              exact
-            />
+            <Route path="/details" component={BookingDetailsScreen} exact />
             <Route path="/home/search/:keyword" component={HomeScreen} exact />
             <Route path="/home/page/:pageNumber" component={HomeScreen} exact />
             <Route

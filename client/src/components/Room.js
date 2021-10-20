@@ -8,7 +8,9 @@ import {
   Button,
   Carousel,
 } from 'react-bootstrap'
+import { addToStorage } from '../actions/storageActions'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 AOS.init({
@@ -17,14 +19,16 @@ AOS.init({
 
 const Room = ({ room, fromdate, todate }) => {
   const history = useHistory()
+  const dispatch = useDispatch()
+
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
   const checkoutHandler = () => {
-    //history.push(`/booking/${room._id}/${fromdate}/${todate}`)
-    history.push('/login?redirect=shipping')
+    dispatch(addToStorage(room._id, fromdate, todate))
+    history.push('/login?redirect=details')
   }
 
   return (

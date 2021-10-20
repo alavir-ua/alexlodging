@@ -164,6 +164,17 @@ input.range-slider {
 	color: #00004d;
 }
 
+.nav-link {
+	color: white;
+}
+.nav-link:hover {
+	color:  white;
+}
+
+.nav-link.disabled{
+	color: darkorange;
+}
+
 
 
 

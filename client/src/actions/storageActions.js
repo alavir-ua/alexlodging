@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {
   STORAGE_ADD_ROOM,
+  STORAGE_REMOVE_ROOM,
   STORAGE_SAVE_BILLING_ADDRESS,
 } from '../constants/storageConstants'
 
@@ -11,10 +12,10 @@ export const addToStorage =
     dispatch({
       type: STORAGE_ADD_ROOM,
       payload: {
-        room: data._id,
         hotelName: data.hotelName,
-        rentPerDay: data.rentPerDay,
         address: data.address,
+        image: data.imageUrls[0],
+        cost: data.rentPerDay,
         fromDate: fromDate,
         toDate: toDate,
       },
@@ -25,6 +26,17 @@ export const addToStorage =
       JSON.stringify(getState().storage.storageRoom)
     )
   }
+
+export const removeFromStorage = () => (dispatch, getState) => {
+  dispatch({
+    type: STORAGE_REMOVE_ROOM,
+  })
+
+  localStorage.setItem(
+    'storageRoom',
+    JSON.stringify(getState().storage.storageRoom)
+  )
+}
 
 export const saveBillingAddress = (data) => (dispatch) => {
   dispatch({
