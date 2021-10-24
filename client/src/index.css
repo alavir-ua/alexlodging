@@ -14,7 +14,7 @@ header, footer {
 	color: white;
 }
 
-h1,h2,h3,h4,h5,h6,label,hr {
+h1, h2, h3, h4, h5, h6, label, hr {
 	color: #00004d;
 }
 
@@ -39,11 +39,11 @@ h1,h2,h3,h4,h5,h6,label,hr {
 }
 
 .al-search-box input {
-  height: 43px;
+	height: 43px;
 }
 
 .al-search-box {
-  z-index: 1;
+	z-index: 1;
 }
 
 .al-room-box {
@@ -87,7 +87,7 @@ input {
 /*don`t change class name!*/
 .page-link:hover {
 	background-color: #0000e6;
-	color:white;
+	color: white;
 }
 
 /*don`t change class name!*/
@@ -98,7 +98,7 @@ input {
 
 /*don`t change class name!*/
 .dropdown-item {
-	color:  #00004d
+	color: #00004d
 }
 
 .al-not-found {
@@ -115,7 +115,7 @@ input {
 	font-size: 10rem;
 }
 
-.al-not-found button{
+.al-not-found button {
 	margin-top: 2rem;
 }
 
@@ -134,7 +134,7 @@ input {
 
 .al-side-filter nav {
 	box-shadow: rgba(0, 0, 0, 0.75) 0 5px 15px;
-	background-color: rgba(143,188,143,0.95);
+	background-color: rgba(143, 188, 143, 0.95);
 	border-radius: 5px;
 	padding: 5px;
 }
@@ -167,12 +167,17 @@ input.range-slider {
 .nav-link {
 	color: white;
 }
+
 .nav-link:hover {
-	color:  white;
+	color: white;
 }
 
-.nav-link.disabled{
+.nav-link.disabled {
 	color: darkorange;
+}
+
+.step-links {
+	padding: 0;
 }
 
 
