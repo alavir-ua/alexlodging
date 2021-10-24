@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Row,
   Col,
@@ -9,8 +10,8 @@ import {
   Carousel,
 } from 'react-bootstrap'
 import { addToStorage } from '../actions/storageActions'
+import { removeFromStorage } from '../actions/storageActions'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 AOS.init({
@@ -23,16 +24,22 @@ const Room = ({ room, fromdate, todate }) => {
 
   const [show, setShow] = useState(false)
 
+  const stateStorage = useSelector((state) => state.storage)
+  const { storageRoom } = stateStorage
+
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
   const checkoutHandler = () => {
+    if(storageRoom){
+      dispatch(removeFromStorage())
+    }
     dispatch(addToStorage(room._id, fromdate, todate))
     history.push('/login?redirect=details')
   }
 
   return (
-    <div className="al-room-box al-box-shadow" data-aos="zoom-in">
+    <div className="al-content-box al-box-shadow" data-aos="zoom-in">
       <Row>
         <Col md={4}>
           <Image src={room.imageUrls[0]} alt={room.hotelName} fluid />

@@ -53,7 +53,7 @@ const BookingDetailsScreen = () => {
     "
       />
       <Row
-        className="al-box-shadow"
+        className="al-content-box al-box-shadow"
         data-aos="zoom-in"
         style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
       >
