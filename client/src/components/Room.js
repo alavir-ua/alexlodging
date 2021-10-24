@@ -9,8 +9,8 @@ import {
   Button,
   Carousel,
 } from 'react-bootstrap'
-import { addToStorage } from '../actions/storageActions'
-import { removeFromStorage } from '../actions/storageActions'
+import { addToStorage } from 'actions/storageActions'
+import { removeFromStorage } from 'actions/storageActions'
 import { useHistory } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -31,7 +31,7 @@ const Room = ({ room, fromdate, todate }) => {
   const handleShow = () => setShow(true)
 
   const checkoutHandler = () => {
-    if(storageRoom){
+    if (storageRoom) {
       dispatch(removeFromStorage())
     }
     dispatch(addToStorage(room._id, fromdate, todate))

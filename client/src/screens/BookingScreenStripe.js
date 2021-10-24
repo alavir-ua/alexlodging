@@ -9,14 +9,14 @@ import {
 } from '@stripe/react-stripe-js'
 
 import { useDispatch, useSelector } from 'react-redux'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+import Message from 'components/Message'
+import Loader from 'components/Loader'
 
-import { getBookingDetails, payBooking } from '../actions/bookingActions'
+import { getBookingDetails, payBooking } from 'actions/bookingActions'
 
-import { STRIPE_PAY_RESET } from '../constants/stripeConstants'
-import { createStripePay } from '../actions/stripeActions'
-import { BOOKING_PAY_RESET } from '../constants/bookingConstants'
+import { STRIPE_PAY_RESET } from 'constants/stripeConstants'
+import { createStripePay } from 'actions/stripeActions'
+import { BOOKING_PAY_RESET } from 'constants/bookingConstants'
 
 import { loadStripe } from '@stripe/stripe-js'
 import Meta from '../components/Meta'

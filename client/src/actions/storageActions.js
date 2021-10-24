@@ -3,7 +3,7 @@ import {
   STORAGE_ADD_ROOM,
   STORAGE_REMOVE_ROOM,
   STORAGE_SAVE_BILLING_ADDRESS,
-} from '../constants/storageConstants'
+} from 'constants/storageConstants'
 
 export const addToStorage =
   (id, fromDate, toDate) => async (dispatch, getState) => {

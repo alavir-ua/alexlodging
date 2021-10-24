@@ -6,7 +6,7 @@ import {
   ROOM_DETAILS_REQUEST,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
-} from '../constants/roomConstants'
+} from 'constants/roomConstants'
 
 export const listRooms =
   (

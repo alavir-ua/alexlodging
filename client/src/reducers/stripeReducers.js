@@ -3,7 +3,7 @@ import {
   STRIPE_PAY_SUCCESS,
   STRIPE_PAY_FAIL,
   STRIPE_PAY_RESET,
-} from '../constants/stripeConstants'
+} from 'constants/stripeConstants'
 
 export const stripePayReducer = (state = {}, action) => {
   switch (action.type) {
