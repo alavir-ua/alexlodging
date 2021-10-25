@@ -44,7 +44,7 @@ const CARD_OPTIONS = {
   },
 }
 
-const BookingScreenStripe = ({ match, history }) => {
+const BookingPaymentScreen = ({ match, history }) => {
   const orderId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -303,4 +303,4 @@ const BookingScreenStripe = ({ match, history }) => {
   )
 }
 
-export default BookingScreenStripe
+export default BookingPaymentScreen

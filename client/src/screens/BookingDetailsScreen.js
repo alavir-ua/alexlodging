@@ -8,6 +8,7 @@ import CheckoutSteps from 'components/CheckoutSteps'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import moment from 'moment'
+
 AOS.init({
   duration: '1000',
 })
@@ -38,6 +39,11 @@ const BookingDetailsScreen = () => {
     }
   }, [dispatch, history, user])
 
+  const clickHandler = (e) => {
+    e.preventDefault()
+    history.push('/billing')
+  }
+
   return (
     <>
       <CheckoutSteps step1 step2 />
@@ -52,11 +58,7 @@ const BookingDetailsScreen = () => {
         }
     "
       />
-      <Row
-        className="al-content-box al-box-shadow"
-        data-aos="zoom-in"
-        style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-      >
+      <Row className="al-content-box al-box-shadow" data-aos="zoom-in">
         <Col md={6}>
           <h5 className="mb-0">{storageRoom.hotelName}</h5>
           <p className="address-text">{storageRoom.address}</p>
@@ -88,14 +90,14 @@ const BookingDetailsScreen = () => {
             </ListGroup.Item>
           </ListGroup>
           <hr />
-          <div style={{ float: 'right' }}>
-            <Button
-              className="btn btn-dark m-2"
-              /*onClick={placeBookingHandler}*/
-            >
-              Continue
-            </Button>
-          </div>
+
+          <Button
+            type="submit"
+            className="btn btn-dark m-2 al-btn-right"
+            onClick={clickHandler}
+          >
+            Continue
+          </Button>
         </Col>
       </Row>
     </>

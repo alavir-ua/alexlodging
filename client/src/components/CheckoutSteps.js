@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (
-    <Nav className="justify-content-center mb-4 al-box-shadow step-links">
+    <Nav className="justify-content-center mb-4 al-box-shadow al-step-links">
       <Nav.Item>
         {step1 ? (
           <LinkContainer to="/login">
@@ -28,7 +28,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
       <Nav.Item>
         {step3 ? (
           <LinkContainer to="/billing">
-            <Nav.Link>Billing Address</Nav.Link>
+            <Nav.Link>Billing Details</Nav.Link>
           </LinkContainer>
         ) : (
           <Nav.Link disabled>Billing Address</Nav.Link>

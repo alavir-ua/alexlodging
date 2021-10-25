@@ -176,9 +176,20 @@ input.range-slider {
 	color: darkorange;
 }
 
-.step-links {
+.al-step-links {
 	padding: 0;
 }
+
+.al-iso-text {
+	color: red;
+	font-size: 0.9rem;
+}
+
+.al-btn-right {
+	float: right;
+}
+
+
 
 
 

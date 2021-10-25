@@ -9,6 +9,8 @@ import RegisterScreen from 'screens/RegisterScreen'
 import NotFoundScreen from 'screens/NotFoundScreen'
 import HomeScreen from 'screens/HomeScreen'
 import BookingDetailsScreen from 'screens/BookingDetailsScreen'
+import BillingDetailsScreen from 'screens/BillingDetailsScreen'
+//import BookingPaymentScreen from 'screens/BookingPaymentScreen'
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
             <Route path="/register" component={RegisterScreen} exact />
             <Route path="/home" component={HomeScreen} exact />
             <Route path="/details" component={BookingDetailsScreen} exact />
+            <Route path="/billing" component={BillingDetailsScreen} exact />
+            {/*<Route path="/payment" component={BookingPaymentScreen} exact />*/}
             <Route path="/home/search/:keyword" component={HomeScreen} exact />
             <Route path="/home/page/:pageNumber" component={HomeScreen} exact />
             <Route
