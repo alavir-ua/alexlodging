@@ -16,14 +16,29 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar className="navbar navbar-expand-lg navbar-dark" collapseOnSelect>
+      <Navbar variant="dark" expand="md" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Alex Lodging</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="al-nav">
+            <Nav className="mr-auto">
+              <LinkContainer to="/home">
+                <Nav.Link>
+                  <i className="fas fa-home"></i> Home
+                </Nav.Link>
+              </LinkContainer>
+              <a
+                className="nav-link"
+                href="https://github.com/alavir-ua/alexlodging.git"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <i className="fab fa-github"></i> Github
+              </a>
+            </Nav>
+            <Nav className="al-nav ml-auto">
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">
                   <LinkContainer to="/profile">
