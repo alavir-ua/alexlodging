@@ -23,7 +23,11 @@ const App = () => {
             <Route path="/login" component={LoginScreen} exact />
             <Route path="/register" component={RegisterScreen} exact />
             <Route path="/home" component={HomeScreen} exact />
-            <Route path="/details" component={BookingDetailsScreen} exact />
+            <Route
+              path="/details/:id/:fromDate/:toDate"
+              component={BookingDetailsScreen}
+              exact
+            />
             <Route path="/billing" component={BillingDetailsScreen} exact />
             {/*<Route path="/payment" component={BookingPaymentScreen} exact />*/}
             <Route path="/home/search/:keyword" component={HomeScreen} exact />

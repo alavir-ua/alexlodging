@@ -38,12 +38,12 @@ h1, h2, h3, h4, h5, h6, label, hr {
 	padding: 20px;
 }
 
-.al-search-box input {
-	height: 43px;
-}
-
 .al-search-box {
 	z-index: 1;
+}
+
+.al-search-box input {
+	height: 43px;
 }
 
 .al-content-box {
@@ -140,16 +140,16 @@ input {
 }
 
 span.rs-btn-toggle {
-	background: olive;
+	background: #00004d;
 	margin-bottom: 3rem;
 }
 
 span.rs-btn-toggle:hover {
-	background: darkcyan;
+	background: maroon;
 }
 
 span.rs-btn-toggle-checked {
-	background: #00004d !important;
+	background: darkcyan !important;
 }
 
 .rs-sidenav-collapse-out {
@@ -192,10 +192,15 @@ input.range-slider {
 @media (max-width: 576px) {
 	.al-side-filter {
 		width: 250px;
-		position: fixed;
+		position: absolute;
 		left: 0;
-		top: 15rem;
+		top: 13.3rem;
 		z-index: 2;
+	}
+
+	.al-search-box {
+		margin-top: 0.3rem;
+		z-index: 1;
 	}
 }
 

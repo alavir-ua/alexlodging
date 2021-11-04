@@ -8,15 +8,16 @@ import moment from 'moment'
 // @access  Private
 const createBooking = asyncHandler(async (req, res) => {
   const { room, fromDate, toDate, totalAmount, totalDays } = req.body
-
-  const convertFrom = moment(fromDate).format('YYYY-MM-DD')
-  const convertTo = moment(toDate).format('YYYY-MM-DD')
+  /*const convertFrom = moment(fromDate).format('YYYY-MM-DD')
+  const convertTo = moment(toDate).format('YYYY-MM-DD')*/
 
   const booking = new Booking({
-    room,
     user: req.user._id,
-    fromDate: convertFrom,
-    toDate: convertTo,
+    details: {
+      room,
+      fromDate,
+      toDate,
+    },
     totalAmount,
     totalDays,
   })

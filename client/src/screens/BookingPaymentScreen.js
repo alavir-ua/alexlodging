@@ -66,16 +66,6 @@ const BookingPaymentScreen = ({ match, history }) => {
   const { loadingStripePay, stripePaymentError, stripePaymentResult } =
     stripePay
 
-  /*if (!loading) {
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2)
-    }
-
-    order.itemsPrice = addDecimals(
-      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-    )
-  }*/
-
   const CheckoutForm = () => {
     const stripe = useStripe()
     const elements = useElements()

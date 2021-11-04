@@ -5,6 +5,7 @@ import {
   ROOM_DETAILS_REQUEST,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
+  ROOM_DETAILS_RESET,
 } from 'constants/roomConstants'
 
 export const roomListReducer = (state = { rooms: [] }, action) => {
@@ -36,6 +37,8 @@ export const roomDetailsReducer = (
       return { loading: false, room: action.payload }
     case ROOM_DETAILS_FAIL:
       return { loading: false, error: action.payload }
+    case ROOM_DETAILS_RESET:
+      return { room: { imageUrls: [], currentBookings: [], amenities: [] } }
     default:
       return state
   }

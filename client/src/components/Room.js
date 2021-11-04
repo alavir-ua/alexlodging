@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import {
   Row,
   Col,
@@ -9,8 +8,6 @@ import {
   Button,
   Carousel,
 } from 'react-bootstrap'
-import { addToStorage } from 'actions/storageActions'
-import { removeFromStorage } from 'actions/storageActions'
 import { useHistory } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -19,23 +16,14 @@ AOS.init({
 })
 
 const Room = ({ room, fromdate, todate }) => {
-  const history = useHistory()
-  const dispatch = useDispatch()
-
   const [show, setShow] = useState(false)
-
-  const stateStorage = useSelector((state) => state.storage)
-  const { storageRoom } = stateStorage
+  const history = useHistory()
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
   const checkoutHandler = () => {
-    if (storageRoom) {
-      dispatch(removeFromStorage())
-    }
-    dispatch(addToStorage(room._id, fromdate, todate))
-    history.push('/login?redirect=details')
+    history.push(`/login?redirect=details/${room._id}/${fromdate}/${todate}`)
   }
 
   return (

@@ -12,6 +12,7 @@ export const addToStorage =
     dispatch({
       type: STORAGE_ADD_ROOM,
       payload: {
+        id: data._id,
         hotelName: data.hotelName,
         address: data.address,
         image: data.imageUrls[0],

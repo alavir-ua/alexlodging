@@ -1,27 +1,51 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from 'components/FormContainer'
 import CheckoutSteps from 'components/CheckoutSteps'
-import { saveBillingAddress } from '../actions/storageActions'
+import { saveBillingAddress } from 'actions/storageActions'
+import { createBooking } from 'actions/bookingActions'
+import { BOOKING_CREATE_RESET } from 'constants/bookingConstants'
+import { USER_DETAILS_RESET } from 'constants/userConstants'
+
 import Meta from '../components/Meta'
 
 const BillingDetailsScreen = ({ history }) => {
-  const storage = useSelector((state) => state.storage)
-  const { billingAddress } = storage
-
-  const [address, setAddress] = useState(billingAddress.address)
-  const [city, setCity] = useState(billingAddress.city)
-  const [postalCode, setPostalCode] = useState(billingAddress.postalCode)
-  const [country, setCountry] = useState(billingAddress.country)
+  const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [postalCode, setPostalCode] = useState('')
+  const [country, setCountry] = useState('')
 
   const dispatch = useDispatch()
+
+  const bookingCreate = useSelector((state) => state.bookingCreate)
+  const { booking, success, error } = bookingCreate
+
+  const stateStorage = useSelector((state) => state.storage)
+  const { storageRoom } = stateStorage
 
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(saveBillingAddress({ address, city, postalCode, country }))
     history.push('/payment')
   }
+
+  useEffect(() => {
+    dispatch(
+      createBooking({
+        room: storageRoom.id,
+        fromDate: storageRoom.fromDate,
+        toDate: storageRoom.toDate,
+        /*totalAmount,
+        totalDays,*/
+      })
+    )
+    if (success) {
+      dispatch({ type: USER_DETAILS_RESET })
+      dispatch({ type: BOOKING_CREATE_RESET })
+      history.push(`/payment/${booking._id}`)
+    }
+  }, [history, success, booking])
 
   return (
     <>
