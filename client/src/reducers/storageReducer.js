@@ -1,20 +1,18 @@
 import {
-  STORAGE_ADD_ROOM,
+  STORAGE_SAVE_BOOKING_DETAILS,
   STORAGE_SAVE_BILLING_ADDRESS,
-  STORAGE_REMOVE_ROOM,
+  STORAGE_RESET,
 } from 'constants/storageConstants'
 
 export const storageReducer = (
-  state = { storageRoom: {}, billingAddress: {} },
+  state = { bookingDetails: {}, billingAddress: {} },
   action
 ) => {
   switch (action.type) {
-    case STORAGE_ADD_ROOM:
-      const room = action.payload
-
+    case STORAGE_SAVE_BOOKING_DETAILS:
       return {
         ...state,
-        storageRoom: room,
+        bookingDetails: action.payload,
       }
 
     case STORAGE_SAVE_BILLING_ADDRESS:
@@ -22,10 +20,11 @@ export const storageReducer = (
         ...state,
         billingAddress: action.payload,
       }
-    case STORAGE_REMOVE_ROOM:
+    case STORAGE_RESET:
       return {
         ...state,
-        storageRoom: {},
+        bookingDetails: {},
+        billingAddress: {},
       }
     default:
       return state

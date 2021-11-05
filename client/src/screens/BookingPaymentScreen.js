@@ -7,19 +7,28 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js'
-
+import { createBooking } from 'actions/bookingActions'
+import { USER_DETAILS_RESET } from 'constants/userConstants'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from 'components/Message'
 import Loader from 'components/Loader'
 
-import { getBookingDetails, payBooking } from 'actions/bookingActions'
+import {
+  createBooking,
+  getBookingDetails,
+  payBooking,
+} from 'actions/bookingActions'
 
 import { STRIPE_PAY_RESET } from 'constants/stripeConstants'
 import { createStripePay } from 'actions/stripeActions'
-import { BOOKING_PAY_RESET } from 'constants/bookingConstants'
+import {
+  BOOKING_CREATE_RESET,
+  BOOKING_PAY_RESET,
+} from 'constants/bookingConstants'
 
 import { loadStripe } from '@stripe/stripe-js'
 import Meta from '../components/Meta'
+import { USER_DETAILS_RESET } from '../constants/userConstants'
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
 
@@ -53,8 +62,11 @@ const BookingPaymentScreen = ({ match, history }) => {
 
   const dispatch = useDispatch()
 
-  const bookingDetails = useSelector((state) => state.bookingDetails)
-  const { booking, loading, error } = bookingDetails
+  const bookingCreate = useSelector((state) => state.bookingCreate)
+  const { booking, success, error } = bookingCreate
+
+  const stateStorage = useSelector((state) => state.storage)
+  const { bookingDetails, billingAddress } = stateStorage
 
   const bookingPay = useSelector((state) => state.bookingPay)
   const { success: successPay } = bookingPay
@@ -65,6 +77,26 @@ const BookingPaymentScreen = ({ match, history }) => {
   const stripePay = useSelector((state) => state.stripePay)
   const { loadingStripePay, stripePaymentError, stripePaymentResult } =
     stripePay
+
+  useEffect(() => {
+    if (successPay) {
+      dispatch(
+        createBooking({
+          room: bookingDetails.room,
+          user: bookingDetails.user,
+          fromDate: bookingDetails.fromDate,
+          toDate: bookingDetails.toDate,
+          totalAmount: bookingDetails.totalAmount,
+          totalDays: bookingDetails.totalDays,
+        })
+      )
+    }
+    if (success) {
+      dispatch({ type: USER_DETAILS_RESET })
+      dispatch({ type: BOOKING_CREATE_RESET })
+    }
+    //history.push(`/payment/${booking._id}`)
+  }, [history, success, booking])
 
   const CheckoutForm = () => {
     const stripe = useStripe()

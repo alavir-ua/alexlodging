@@ -37,8 +37,8 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null
 
-const storageRoomFromStorage = localStorage.getItem('storageRoom')
-  ? JSON.parse(localStorage.getItem('storageRoom'))
+const bookingDetailsFromStorage = localStorage.getItem('bookingDetails')
+  ? JSON.parse(localStorage.getItem('bookingDetails'))
   : {}
 
 const billingAddressFromStorage = localStorage.getItem('billingAddress')
@@ -47,7 +47,7 @@ const billingAddressFromStorage = localStorage.getItem('billingAddress')
 
 const initialState = {
   storage: {
-    storageRoom: storageRoomFromStorage,
+    bookingDetails: bookingDetailsFromStorage,
     billingAddress: billingAddressFromStorage,
   },
   userLogin: { userInfo: userInfoFromStorage },

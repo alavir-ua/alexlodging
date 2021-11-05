@@ -8,7 +8,7 @@ import { listRoomDetails } from 'actions/roomActions'
 import Message from 'components/Message'
 import Loader from 'components/Loader'
 import CheckoutSteps from 'components/CheckoutSteps'
-import { addToStorage } from 'actions/storageActions'
+import { saveBookingDetails } from 'actions/storageActions'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import moment from 'moment'
@@ -28,7 +28,7 @@ const BookingDetailsScreen = ({ match }) => {
   const { user } = userDetails
 
   const stateStorage = useSelector((state) => state.storage)
-  const { storageRoom } = stateStorage
+  const { bookingDetails } = stateStorage
 
   const totalDays =
     moment
@@ -52,9 +52,16 @@ const BookingDetailsScreen = ({ match }) => {
 
   const clickHandler = (e) => {
     e.preventDefault()
-    if (!storageRoom._id || storageRoom._id !== room._id) {
+    if (!bookingDetails.room || bookingDetails.room !== room._id) {
       dispatch(
-        addToStorage(room._id, match.params.fromDate, match.params.toDate)
+        saveBookingDetails(
+          room._id,
+          user._id,
+          match.params.fromDate,
+          match.params.toDate,
+          totalDays,
+          totalAmount
+        )
       )
     }
     history.push('/billing')
