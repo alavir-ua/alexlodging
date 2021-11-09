@@ -7,29 +7,16 @@ import moment from 'moment'
 // @route   POST /api/booking
 // @access  Private
 const createBooking = asyncHandler(async (req, res) => {
-  const { room, fromDate, toDate, totalAmount, totalDays } = req.body
-  /*const convertFrom = moment(fromDate).format('YYYY-MM-DD')
-  const convertTo = moment(toDate).format('YYYY-MM-DD')*/
-
-  const booking = new Booking({
-    user: req.user._id,
-    details: {
-      room,
-      fromDate,
-      toDate,
-    },
-    totalAmount,
-    totalDays,
-  })
+  const booking = new Booking(req.body)
 
   const createdBooking = await booking.save()
 
-  const roomTemp = await Room.findById(room)
+  const roomTemp = await Room.findById(req.body.room)
 
   roomTemp.currentBookings.push({
     booking: createdBooking._id,
-    fromDate: convertFrom,
-    toDate: convertTo,
+    fromDate: createdBooking.fromDate,
+    toDate: createdBooking.toDate,
     user: createdBooking.user,
     status: createdBooking.status,
   })
@@ -43,13 +30,13 @@ const createBooking = asyncHandler(async (req, res) => {
 // @route   GET /api/bookings/:id
 // @access  Private
 const getBookingById = asyncHandler(async (req, res) => {
-  const order = await Booking.findById(req.params.id).populate(
+  const booking = await Booking.findById(req.params.id).populate(
     'user',
     'name email'
   )
 
-  if (order) {
-    res.json(order)
+  if (booking) {
+    res.json(booking)
   } else {
     res.status(404)
     throw new Error('Booking not found')
@@ -62,29 +49,17 @@ const getBookingById = asyncHandler(async (req, res) => {
 const updateBookingToPaid = asyncHandler(async (req, res) => {
   const booking = await Booking.findById(req.params.id)
 
-  /*requires redesign of the booking model*/
-
   if (booking) {
-    /* order.isPaid = true
-    order.paidAt = Date.now()
-    order.paymentResult =
-      order.paymentMethod === 'PayPal'
-        ? {
-            id: req.body.id,
-            status: req.body.status,
-            update_time: req.body.update_time,
-            email_address: req.body.payer.email_address,
-          }
-        : {
-            id: req.body.id,
-            status: req.body.status.toLowerCase(),
-            update_time: new Date(req.body.created),
-            email_address: req.body.charges.data[0].billing_details.email,
-          }
-
-    const updatedOrder = await order.save()
-
-    res.json(updatedOrder)*/
+    booking.isPaid = true
+    booking.paidAt = Date.now()
+    booking.paymentResult = {
+      id: req.body.id,
+      status: req.body.status.toLowerCase(),
+      update_time: new Date(req.body.created),
+      email_address: req.body.charges.data[0].billing_details.email,
+    }
+    const updatedOrder = await booking.save()
+    res.json(updatedOrder)
   } else {
     res.status(404)
     throw new Error('Booking not found')

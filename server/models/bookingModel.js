@@ -7,20 +7,18 @@ const bookingSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
-    details: {
-      room: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Room',
-      },
-      fromDate: {
-        type: String,
-        require: true,
-      },
-      toDate: {
-        type: String,
-        require: true,
-      },
+    room: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Room',
+    },
+    fromDate: {
+      type: String,
+      require: true,
+    },
+    toDate: {
+      type: String,
+      require: true,
     },
     paymentResult: {
       id: { type: String },

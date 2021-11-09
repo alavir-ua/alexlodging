@@ -44,7 +44,7 @@ export const bookingCreateReducer = (state = {}, action) => {
 }
 
 export const bookingDetailsReducer = (
-  state = { loading: true /*orderItems: [], shippingAddress: {}*/ },
+  state = { loading: true, booking: {} },
   action
 ) => {
   switch (action.type) {

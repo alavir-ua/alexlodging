@@ -10,7 +10,7 @@ import NotFoundScreen from 'screens/NotFoundScreen'
 import HomeScreen from 'screens/HomeScreen'
 import BookingDetailsScreen from 'screens/BookingDetailsScreen'
 import BillingDetailsScreen from 'screens/BillingDetailsScreen'
-//import BookingPaymentScreen from 'screens/BookingPaymentScreen'
+import BookingPaymentScreen from 'screens/BookingPaymentScreen'
 
 const App = () => {
   return (
@@ -29,7 +29,11 @@ const App = () => {
               exact
             />
             <Route path="/billing" component={BillingDetailsScreen} exact />
-            {/*<Route path="/payment" component={BookingPaymentScreen} exact />*/}
+            <Route
+              path="/booking/:id/stripe"
+              component={BookingPaymentScreen}
+              exact
+            />
             <Route path="/home/search/:keyword" component={HomeScreen} exact />
             <Route path="/home/page/:pageNumber" component={HomeScreen} exact />
             <Route

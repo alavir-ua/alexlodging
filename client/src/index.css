@@ -88,6 +88,15 @@ input {
 .page-link:hover {
 	background-color: #0000e6;
 	color: white;
+	text-decoration: none;
+
+}
+
+/*don`t change class name!*/
+.active.page-item.active span.page-link {
+	background-color: yellow;
+	border: 1px solid yellow;
+	color: #00004d;
 }
 
 /*don`t change class name!*/
@@ -190,6 +199,7 @@ input.range-slider {
 }
 
 @media (max-width: 576px) {
+
 	.al-side-filter {
 		width: 250px;
 		position: absolute;
@@ -202,7 +212,63 @@ input.range-slider {
 		margin-top: 0.3rem;
 		z-index: 1;
 	}
+
+	.rs-anim-fade {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		width: 85%;
+	}
+
 }
+
+.al-border-yellow {
+	border-top: 1px solid yellow;
+}
+
+/*Stripe*/
+
+.form-stripe {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	font-weight: 400;
+	font-family: Helvetica, sans-serif;
+	font-size: 1rem;
+	width: 100%;
+	padding: 0.2rem;
+	background-color: #00004d;
+	border: none;
+	border-radius: 0.2rem;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.btn-stripe {
+	display: block;
+	width: 100%;
+	background-color: #00004d;
+	color: #ffffff;
+	padding: 0.62rem;
+	font-weight: 400;
+	border: 0.1rem solid yellow;
+	border-radius: 0.4rem;
+}
+
+
+.CardElement {
+	width: 100%;
+	padding: 1rem 1rem 1rem 0.31rem;
+}
+
+.al-yellow-icon {
+	color: yellow;
+	font-size: 1rem;
+}
+
+
+
+
 
 
 

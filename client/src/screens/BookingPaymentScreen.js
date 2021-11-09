@@ -7,30 +7,28 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js'
-import { createBooking } from 'actions/bookingActions'
-import { USER_DETAILS_RESET } from 'constants/userConstants'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from 'components/Message'
 import Loader from 'components/Loader'
-
-import {
-  createBooking,
-  getBookingDetails,
-  payBooking,
-} from 'actions/bookingActions'
-
-import { STRIPE_PAY_RESET } from 'constants/stripeConstants'
-import { createStripePay } from 'actions/stripeActions'
-import {
-  BOOKING_CREATE_RESET,
-  BOOKING_PAY_RESET,
-} from 'constants/bookingConstants'
-
-import { loadStripe } from '@stripe/stripe-js'
+import CheckoutSteps from '../components/CheckoutSteps'
 import Meta from '../components/Meta'
-import { USER_DETAILS_RESET } from '../constants/userConstants'
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
+import { getBookingDetails, payBooking } from '../actions/bookingActions'
+import { STRIPE_PAY_RESET } from '../constants/stripeConstants'
+import { createStripePay } from '../actions/stripeActions'
+import { BOOKING_PAY_RESET } from '../constants/bookingConstants'
+import { loadStripe } from '@stripe/stripe-js'
+
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
+AOS.init({
+  duration: '1000',
+})
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY, {
+  locale: 'en',
+})
 
 const CARD_OPTIONS = {
   iconStyle: 'solid',
@@ -41,7 +39,7 @@ const CARD_OPTIONS = {
       color: '#ffffff',
       fontWeight: 400,
       fontFamily: 'Helvetica, sans-serif',
-      fontSize: '16px',
+      fontSize: '19px',
       fontSmoothing: 'antialiased',
       ':-webkit-autofill': { color: '#fce883' },
       '::placeholder': { color: '#ffffff' },
@@ -54,7 +52,7 @@ const CARD_OPTIONS = {
 }
 
 const BookingPaymentScreen = ({ match, history }) => {
-  const orderId = match.params.id
+  const bookingId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
 
@@ -62,8 +60,8 @@ const BookingPaymentScreen = ({ match, history }) => {
 
   const dispatch = useDispatch()
 
-  const bookingCreate = useSelector((state) => state.bookingCreate)
-  const { booking, success, error } = bookingCreate
+  const bookingStateDetails = useSelector((state) => state.bookingDetails)
+  const { booking, loading, error } = bookingStateDetails
 
   const stateStorage = useSelector((state) => state.storage)
   const { bookingDetails, billingAddress } = stateStorage
@@ -78,26 +76,6 @@ const BookingPaymentScreen = ({ match, history }) => {
   const { loadingStripePay, stripePaymentError, stripePaymentResult } =
     stripePay
 
-  useEffect(() => {
-    if (successPay) {
-      dispatch(
-        createBooking({
-          room: bookingDetails.room,
-          user: bookingDetails.user,
-          fromDate: bookingDetails.fromDate,
-          toDate: bookingDetails.toDate,
-          totalAmount: bookingDetails.totalAmount,
-          totalDays: bookingDetails.totalDays,
-        })
-      )
-    }
-    if (success) {
-      dispatch({ type: USER_DETAILS_RESET })
-      dispatch({ type: BOOKING_CREATE_RESET })
-    }
-    //history.push(`/payment/${booking._id}`)
-  }, [history, success, booking])
-
   const CheckoutForm = () => {
     const stripe = useStripe()
     const elements = useElements()
@@ -110,22 +88,22 @@ const BookingPaymentScreen = ({ match, history }) => {
         card: elements.getElement(CardElement),
         billing_details: {
           address: {
-            city: order.shippingAddress.city,
-            country: order.shippingAddress.country,
-            line1: order.shippingAddress.address,
+            city: billingAddress.city,
+            country: billingAddress.country,
+            line1: billingAddress.address,
             line2: null,
-            postal_code: order.shippingAddress.postalCode,
+            postal_code: billingAddress.postalCode,
             state: null,
           },
-          email: order.user.email,
-          name: order.user.name,
+          email: userInfo.email,
+          name: userInfo.name,
           phone: null,
         },
       })
 
       if (!error) {
         const { id } = paymentMethod
-        dispatch(createStripePay(id, booking))
+        dispatch(createStripePay(id, bookingDetails))
       } else {
         setCardError(error.message)
       }
@@ -143,7 +121,7 @@ const BookingPaymentScreen = ({ match, history }) => {
           onFocus={handleFocus}
         />
         <button className="btn-stripe" type="submit">
-          Pay ${order.totalPrice}
+          Pay ${bookingDetails.totalAmount}
         </button>
       </form>
     )
@@ -162,165 +140,131 @@ const BookingPaymentScreen = ({ match, history }) => {
       history.push('/login')
     }
 
-    if (!order || successPay || successDeliver || order._id !== orderId) {
-      dispatch({ type: ORDER_PAY_RESET })
-      dispatch({ type: ORDER_DELIVER_RESET })
-      dispatch(getOrderDetails(orderId))
-    } else if (!order.isPaid) {
+    if (!booking || successPay || booking._id !== bookingId) {
+      dispatch({ type: BOOKING_PAY_RESET })
+      dispatch(getBookingDetails(bookingId))
+    } else if (!booking.isPaid) {
       setSdkReady(true)
     }
     if (stripePaymentResult) {
-      dispatch(payOrder(orderId, stripePaymentResult))
+      dispatch(payBooking(bookingId, stripePaymentResult))
       dispatch({ type: STRIPE_PAY_RESET })
     }
   }, [
     dispatch,
-    orderId,
+    bookingId,
     successPay,
-    order,
+    booking,
     history,
     userInfo,
     stripePaymentResult,
   ])
 
-  const deliverHandler = () => {
-    dispatch(deliverOrder(order))
-  }
-
-  return loading ? (
-    <Loader />
-  ) : error ? (
-    <Message variant="danger">{error}</Message>
-  ) : (
+  return (
     <>
-      <Meta title={order.isPaid ? order._id.toUpperCase() : 'Charge'} />
-      <h1>Order {order._id}</h1>
-      <Row>
-        <Col md={8}>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h2>Shipping</h2>
-              <p>
-                <strong>Name: </strong> {order.user.name}
-              </p>
-              <p>
-                <strong>Email: </strong>{' '}
-                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
-              </p>
-              <p>
-                <strong>Address:</strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
-                {order.shippingAddress.postalCode},{' '}
-                {order.shippingAddress.country}
-              </p>
-              {order.isDelivered ? (
-                <Message variant="success">
-                  Delivered on {order.deliveredAt}
-                </Message>
-              ) : (
-                <Message variant="danger">Not Delivered</Message>
-              )}
-            </ListGroup.Item>
-
-            <ListGroup.Item>
-              <h2>Payment Method</h2>
-              <p>
-                <strong>Method: </strong>
-                {order.paymentMethod}
-              </p>
-              {order.isPaid ? (
-                <Message variant="success">Paid on {order.paidAt}</Message>
-              ) : (
-                <Message variant="danger">Not Paid</Message>
-              )}
-            </ListGroup.Item>
-
-            <ListGroup.Item>
-              <h2>Order Items</h2>
-              {order.orderItems.length === 0 ? (
-                <Message>Order is empty</Message>
-              ) : (
-                <ListGroup variant="flush">
-                  {order.orderItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={1}>
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
-                        </Col>
-                        <Col>
-                          <Link to={`/book/${item.product}`}>{item.name}</Link>
-                        </Col>
-                        <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              )}
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-        <Col md={4}>
-          <Card>
+      {!booking.isPaid && <CheckoutSteps step1 step2 step3 step4 />}
+      <Meta
+        title={booking.isPaid ? booking._id.toUpperCase() : 'Charge'}
+        style="
+       main {
+            background: url(https://images.unsplash.com/photo-1588625500633-a0cd518f0f60?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80);
+            min-height: 100vh;
+            background-position: top center;
+            background-attachment: fixed;
+        }
+    "
+      />
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Row className="al-content-box al-box-shadow" data-aos="zoom-in">
+          <Col sm={12}>
+            <h3>Booking {booking._id}</h3>
+          </Col>
+          <Col md={7}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h2>Order Summary</h2>
+                <h3>Details</h3>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
-                  <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
-                </Row>
+                <b>Apartment:</b> London, Leversy 23 Hilton apt 23
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
-                </Row>
+                <b>From Date:</b> {bookingDetails.fromDate}
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col>${order.taxPrice}</Col>
-                </Row>
+                <b>To Date:</b> {bookingDetails.toDate}
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
-                  <Col>Total</Col>
-                  <Col>${order.totalPrice}</Col>
-                </Row>
+                <b>Total days:</b> {bookingDetails.totalDays}
               </ListGroup.Item>
-              {userInfo && !order.isPaid && (
-                <>
-                  <ListGroup.Item>
-                    <h2>Stripe payment</h2>
-                  </ListGroup.Item>
-                  <ListGroup.Item style={{ padding: 0 }}>
-                    {cardError && (
-                      <Message variant="danger">{cardError}</Message>
-                    )}
-                    {stripePaymentError && (
-                      <Message variant="danger">{stripePaymentError}</Message>
-                    )}
-                    {sdkReady &&
-                      (loadingStripePay ? (
-                        <Loader />
-                      ) : (
-                        <StripeContainer order={order} />
-                      ))}
-                  </ListGroup.Item>
-                </>
-              )}
+              <ListGroup.Item>
+                <b>Total Amount:</b> {bookingDetails.totalAmount}$
+              </ListGroup.Item>
+
+              <ListGroup.Item>
+                <h3>Payment</h3>
+                <p>
+                  <strong>Method: </strong>
+                  {booking.paymentResult.id}
+                </p>
+                {booking.isPaid ? (
+                  <Message variant="success">Paid on {booking.paidAt}</Message>
+                ) : (
+                  <Message variant="danger">Not Paid</Message>
+                )}
+              </ListGroup.Item>
             </ListGroup>
-          </Card>
-        </Col>
-      </Row>
+          </Col>
+          <Col md={5}>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <h3>Billing</h3>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <b>Name: </b> {userInfo.name}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <b>Email: </b>{' '}
+                <a href={`mailto:${userInfo.email}`}>{userInfo.email}</a>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <b>Address: </b>
+                {billingAddress.address}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <b>City: </b>
+                {billingAddress.city}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <b>Postal Code: </b>
+                {billingAddress.postalCode}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <b>Country: </b>
+                {billingAddress.country}
+              </ListGroup.Item>
+            </ListGroup>
+            <ListGroup variant="flush" className="mt-4">
+              <h3>Stripe payment</h3>
+              <ListGroup.Item style={{ padding: 0 }}>
+                {cardError && <Message variant="danger">{cardError}</Message>}
+                {stripePaymentError && (
+                  <Message variant="danger">{stripePaymentError}</Message>
+                )}
+                {sdkReady &&
+                  (loadingStripePay ? (
+                    <Loader />
+                  ) : (
+                    <StripeContainer booking={bookingDetails} />
+                  ))}
+              </ListGroup.Item>
+            </ListGroup>
+          </Col>
+        </Row>
+      )}
     </>
   )
 }

@@ -39,7 +39,7 @@ const RegisterScreen = ({ location, history }) => {
         title="Sign Up"
         style="
        main {
-            background: url(https://images.unsplash.com/photo-1618775202234-166f12fc962c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1530&q=80) top center;
+            background: url(https://images.unsplash.com/photo-1618775202234-166f12fc962c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1530&q=80);
             min-height: 100vh;
             background-position: top center;
             background-attachment: fixed;
