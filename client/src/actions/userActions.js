@@ -12,6 +12,7 @@ import {
   USER_REGISTER_SUCCESS,
   USER_DETAILS_RESET,
 } from 'constants/userConstants'
+import { STORAGE_RESET } from '../constants/storageConstants'
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -50,7 +51,7 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
-  localStorage.removeItem('storageRoom')
+  localStorage.removeItem('bookingDetails')
   localStorage.removeItem('billingAddress')
   dispatch({ type: USER_LOGOUT })
   dispatch({ type: USER_DETAILS_RESET })

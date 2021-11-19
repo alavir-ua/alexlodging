@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
+import Booking from '../models/bookingModel.js'
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
@@ -39,4 +40,19 @@ const admin = (req, res, next) => {
   }
 }
 
-export { protect, admin }
+const owner = asyncHandler(async (req, res, next) => {
+  const booking = await Booking.findById(req.params.id)
+
+  if (
+    !booking ||
+    req.user._id.toString() === booking.user.toString() ||
+    req.user.isAdmin
+  ) {
+    next()
+  } else {
+    res.status(401)
+    throw new Error('Not authorized as booking owner')
+  }
+})
+
+export { protect, admin, owner }

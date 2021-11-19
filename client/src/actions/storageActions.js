@@ -40,18 +40,11 @@ export const saveBillingAddress = (data) => (dispatch, getState) => {
   )
 }
 
-export const resetStorage = () => (dispatch, getState) => {
+export const resetStorage = () => (dispatch) => {
   dispatch({
     type: STORAGE_RESET,
   })
 
-  localStorage.setItem(
-    'bookingDetails',
-    JSON.stringify(getState().storage.bookingDetails)
-  )
-
-  localStorage.setItem(
-    'billingAddress',
-    JSON.stringify(getState().storage.billingAddress)
-  )
+  localStorage.removeItem('bookingDetails')
+  localStorage.removeItem('billingAddress')
 }

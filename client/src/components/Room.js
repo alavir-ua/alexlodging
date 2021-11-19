@@ -11,6 +11,7 @@ import {
 import { useHistory } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+
 AOS.init({
   duration: '1000',
 })
@@ -36,6 +37,7 @@ const Room = ({ room, fromdate, todate }) => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h3>{room.hotelName}</h3>
+              <p className="al-room-address">{room.address}</p>
             </ListGroup.Item>
             <ListGroup.Item>
               <b>Accommodation Type:</b> {room.accommodationType}

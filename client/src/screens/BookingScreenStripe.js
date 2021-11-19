@@ -16,9 +16,10 @@ import Meta from '../components/Meta'
 import { getBookingDetails, payBooking } from '../actions/bookingActions'
 import { STRIPE_PAY_RESET } from '../constants/stripeConstants'
 import { createStripePay } from '../actions/stripeActions'
+import { resetStorage } from '../actions/storageActions'
 import { BOOKING_PAY_RESET } from '../constants/bookingConstants'
-import { loadStripe } from '@stripe/stripe-js'
 
+import { loadStripe } from '@stripe/stripe-js'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
@@ -51,7 +52,7 @@ const CARD_OPTIONS = {
   },
 }
 
-const BookingPaymentScreen = ({ match, history }) => {
+const BookingScreenStripe = ({ match, history }) => {
   const bookingId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -149,6 +150,7 @@ const BookingPaymentScreen = ({ match, history }) => {
     if (stripePaymentResult) {
       dispatch(payBooking(bookingId, stripePaymentResult))
       dispatch({ type: STRIPE_PAY_RESET })
+      dispatch(resetStorage())
     }
   }, [
     dispatch,
@@ -162,9 +164,11 @@ const BookingPaymentScreen = ({ match, history }) => {
 
   return (
     <>
-      {!booking.isPaid && <CheckoutSteps step1 step2 step3 step4 />}
+      {booking && !booking.isPaid && !userInfo.isAdmin && (
+        <CheckoutSteps step1 step2 step3 step4 />
+      )}
       <Meta
-        title={booking.isPaid ? booking._id.toUpperCase() : 'Charge'}
+        title={booking && booking.isPaid ? booking._id.toUpperCase() : 'Charge'}
         style="
        main {
             background: url(https://images.unsplash.com/photo-1588625500633-a0cd518f0f60?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80);
@@ -189,29 +193,35 @@ const BookingPaymentScreen = ({ match, history }) => {
                 <h3>Details</h3>
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Apartment:</b> London, Leversy 23 Hilton apt 23
+                <b>Apartment:</b> {booking.room.hotelName},
+                {booking.room.address}
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>From Date:</b> {bookingDetails.fromDate}
+                <b>From Date:</b> {booking.fromDate}
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>To Date:</b> {bookingDetails.toDate}
+                <b>To Date:</b> {booking.toDate}
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Total days:</b> {bookingDetails.totalDays}
+                <b>Total days:</b> {booking.totalDays}
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Total Amount:</b> {bookingDetails.totalAmount}$
+                <b>Total Amount:</b> {booking.totalAmount}$
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <h3>Payment</h3>
-                <p>
-                  <strong>Method: </strong>
-                  {booking.paymentResult.id}
-                </p>
+
                 {booking.isPaid ? (
-                  <Message variant="success">Paid on {booking.paidAt}</Message>
+                  <>
+                    <p>
+                      <strong>Method: </strong>
+                      {booking.paymentResult.id}
+                    </p>
+                    <Message variant="success">
+                      Paid on {booking.paidAt}
+                    </Message>
+                  </>
                 ) : (
                   <Message variant="danger">Not Paid</Message>
                 )}
@@ -224,44 +234,55 @@ const BookingPaymentScreen = ({ match, history }) => {
                 <h3>Billing</h3>
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Name: </b> {userInfo.name}
+                <b>Name: </b> {booking.user.name}
               </ListGroup.Item>
               <ListGroup.Item>
                 <b>Email: </b>{' '}
-                <a href={`mailto:${userInfo.email}`}>{userInfo.email}</a>
+                <a href={`mailto:${booking.user.email}`}>
+                  {booking.user.email}
+                </a>
               </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Address: </b>
-                {billingAddress.address}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>City: </b>
-                {billingAddress.city}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Postal Code: </b>
-                {billingAddress.postalCode}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <b>Country: </b>
-                {billingAddress.country}
-              </ListGroup.Item>
+              {!booking.isPaid && (
+                <>
+                  <ListGroup.Item>
+                    <b>Address: </b>
+                    {billingAddress.address}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>City: </b>
+                    {billingAddress.city}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>Postal Code: </b>
+                    {billingAddress.postalCode}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>Country: </b>
+                    {billingAddress.country}
+                  </ListGroup.Item>
+                </>
+              )}
             </ListGroup>
-            <ListGroup variant="flush" className="mt-4">
-              <h3>Stripe payment</h3>
-              <ListGroup.Item style={{ padding: 0 }}>
-                {cardError && <Message variant="danger">{cardError}</Message>}
-                {stripePaymentError && (
-                  <Message variant="danger">{stripePaymentError}</Message>
-                )}
-                {sdkReady &&
-                  (loadingStripePay ? (
-                    <Loader />
-                  ) : (
-                    <StripeContainer booking={bookingDetails} />
-                  ))}
-              </ListGroup.Item>
-            </ListGroup>
+
+            {!userInfo.isAdmin && (
+              <ListGroup variant="flush" className="mt-4">
+                <ListGroup.Item style={{ padding: 0 }}>
+                  {cardError && <Message variant="danger">{cardError}</Message>}
+                  {stripePaymentError && (
+                    <Message variant="danger">{stripePaymentError}</Message>
+                  )}
+                  {sdkReady &&
+                    (loadingStripePay ? (
+                      <Loader />
+                    ) : (
+                      <>
+                        <h3>Stripe payment</h3>
+                        <StripeContainer booking={bookingDetails} />
+                      </>
+                    ))}
+                </ListGroup.Item>
+              </ListGroup>
+            )}
           </Col>
         </Row>
       )}
@@ -269,4 +290,4 @@ const BookingPaymentScreen = ({ match, history }) => {
   )
 }
 
-export default BookingPaymentScreen
+export default BookingScreenStripe

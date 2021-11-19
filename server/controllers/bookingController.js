@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Booking from '../models/bookingModel.js'
 import Room from '../models/roomModel.js'
-import moment from 'moment'
+//import moment from 'moment'
 
 // @desc    Create new booking
 // @route   POST /api/booking
@@ -30,10 +30,9 @@ const createBooking = asyncHandler(async (req, res) => {
 // @route   GET /api/bookings/:id
 // @access  Private
 const getBookingById = asyncHandler(async (req, res) => {
-  const booking = await Booking.findById(req.params.id).populate(
-    'user',
-    'name email'
-  )
+  const booking = await Booking.findById(req.params.id)
+    .populate('user', 'name email')
+    .populate('room', 'hotelName address')
 
   if (booking) {
     res.json(booking)

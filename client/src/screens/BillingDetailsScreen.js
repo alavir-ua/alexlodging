@@ -26,7 +26,7 @@ const BillingDetailsScreen = ({ history }) => {
 
   useEffect(() => {
     if (success) {
-      history.push(`/booking/${booking._id}/stripe`)
+      history.push(`/booking/${booking._id}`)
       dispatch({ type: USER_DETAILS_RESET })
       dispatch({ type: BOOKING_CREATE_RESET })
     }
