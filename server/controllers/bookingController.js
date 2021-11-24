@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Booking from '../models/bookingModel.js'
 import Room from '../models/roomModel.js'
-//import moment from 'moment'
+import scheduler from '../agenda/scheduler'
 
 // @desc    Create new booking
 // @route   POST /api/booking
@@ -11,6 +11,8 @@ const createBooking = asyncHandler(async (req, res) => {
 
   const createdBooking = await booking.save()
 
+  await scheduler.checkBookingForPayment(createdBooking._id)
+
   const roomTemp = await Room.findById(req.body.room)
 
   roomTemp.currentBookings.push({
@@ -18,14 +20,12 @@ const createBooking = asyncHandler(async (req, res) => {
     fromDate: createdBooking.fromDate,
     toDate: createdBooking.toDate,
     user: createdBooking.user,
-    status: createdBooking.status,
   })
 
   await roomTemp.save()
 
   res.status(201).json(createdBooking)
 })
-
 // @desc    Get booking by ID
 // @route   GET /api/bookings/:id
 // @access  Private
