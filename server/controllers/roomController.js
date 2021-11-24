@@ -43,7 +43,7 @@ const getRooms = asyncHandler(async (req, res) => {
   }
 
   if (from_date || to_date) {
-    const roomsData = await Room.find({ ...filter })
+    const roomsData = await Room.find({ ...filter }).sort({ createdAt: -1 })
 
     let tempRooms = []
 
