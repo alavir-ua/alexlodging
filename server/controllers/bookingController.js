@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Booking from '../models/bookingModel.js'
 import Room from '../models/roomModel.js'
-import scheduler from '../agenda/scheduler'
+import scheduler from '../agenda/scheduler.js'
 
 // @desc    Create new booking
 // @route   POST /api/booking
