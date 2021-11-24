@@ -51,6 +51,7 @@ const updateBookingToPaid = asyncHandler(async (req, res) => {
   if (booking) {
     booking.isPaid = true
     booking.paidAt = Date.now()
+    booking.status = 'booked'
     booking.paymentResult = {
       id: req.body.id,
       status: req.body.status.toLowerCase(),
@@ -103,10 +104,31 @@ const getBookings = asyncHandler(async (req, res) => {
   }
 })
 
+/*method for deleting a reservation within 20 minutes if it is not paid*/
+const checkBookingForPayment = asyncHandler(async (id) => {
+  const booking = await Booking.findById(id)
+
+  if (booking) {
+    if (!booking.isPaid) {
+      const room = await Room.findById(booking.room)
+
+      room.currentBookings = room.currentBookings.filter((element) => {
+        return element.booking.toString() !== booking._id.toString()
+      })
+
+      await room.save()
+      await booking.remove()
+    }
+  } else {
+    console.log('Booking not found')
+  }
+})
+
 export {
   createBooking,
   getBookingById,
   updateBookingToPaid,
   getMyBookings,
   getBookings,
+  checkBookingForPayment,
 }
