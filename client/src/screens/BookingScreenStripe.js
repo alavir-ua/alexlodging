@@ -276,6 +276,9 @@ const BookingScreenStripe = ({ match, history }) => {
                     ) : (
                       <>
                         <h3>Stripe payment</h3>
+                        <p style={{ color: 'red' }}>
+                          You must pay for the reservation within 20 minutes
+                        </p>
                         <StripeContainer booking={bookingDetails} />
                       </>
                     ))}
