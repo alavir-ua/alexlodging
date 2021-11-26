@@ -11,8 +11,7 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_DETAILS_RESET,
-} from 'constants/userConstants'
-import { STORAGE_RESET } from '../constants/storageConstants'
+} from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
   try {

@@ -17,7 +17,7 @@ import {
   BOOKING_LIST_FAIL,
   BOOKING_LIST_SUCCESS,
   BOOKING_LIST_REQUEST,
-} from 'constants/bookingConstants'
+} from '../constants/bookingConstants'
 
 export const bookingCreateReducer = (state = {}, action) => {
   switch (action.type) {

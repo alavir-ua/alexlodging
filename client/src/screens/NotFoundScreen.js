@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
-import Meta from 'components/Meta'
+import Meta from '../components/Meta'
 
 const NotFoundScreen = ({ history }) => {
   let location = useLocation()

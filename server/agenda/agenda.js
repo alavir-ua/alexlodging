@@ -1,8 +1,11 @@
 import Agenda from 'agenda'
+import dotenv from 'dotenv'
 import { checkBookingForPayment } from '../controllers/bookingController.js'
 
+dotenv.config()
+
 const agenda = new Agenda({
-  db: { address: 'mongodb://localhost/alexlondging', collection: 'agendaJobs' },
+  db: { address: process.env.MONGO_URI, collection: 'agendaJobs' },
 })
 
 agenda

@@ -2,9 +2,9 @@ import {
   STRIPE_PAY_REQUEST,
   STRIPE_PAY_SUCCESS,
   STRIPE_PAY_FAIL,
-} from 'constants/stripeConstants'
+} from '../constants/stripeConstants'
 import axios from 'axios'
-import { logout } from 'actions/userActions'
+import { logout } from './userActions'
 
 export const createStripePay =
   (id, bookingDetails) => async (dispatch, getState) => {

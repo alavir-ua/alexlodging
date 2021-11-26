@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import FormContainer from 'components/FormContainer'
-import CheckoutSteps from 'components/CheckoutSteps'
-import { saveBillingAddress } from 'actions/storageActions'
-import Meta from 'components/Meta'
-import Message from 'components/Message'
+import FormContainer from '../components/FormContainer'
+import CheckoutSteps from '../components/CheckoutSteps'
+import { saveBillingAddress } from '../actions/storageActions'
+import Meta from '../components/Meta'
+import Message from '../components/Message'
 import { createBooking } from '../actions/bookingActions'
 import { USER_DETAILS_RESET } from '../constants/userConstants'
 import { BOOKING_CREATE_RESET } from '../constants/bookingConstants'
@@ -30,7 +30,7 @@ const BillingDetailsScreen = ({ history }) => {
       dispatch({ type: USER_DETAILS_RESET })
       dispatch({ type: BOOKING_CREATE_RESET })
     }
-  }, [history, success])
+  }, [dispatch, history, success])
 
   const submitHandler = (e) => {
     e.preventDefault()

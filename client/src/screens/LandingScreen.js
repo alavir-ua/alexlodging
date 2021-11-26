@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import Meta from 'components/Meta'
+import Meta from '../components/Meta'
 
 AOS.init({
   duration: '2000',

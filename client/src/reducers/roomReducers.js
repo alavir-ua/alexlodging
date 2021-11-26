@@ -6,7 +6,7 @@ import {
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
   ROOM_DETAILS_RESET,
-} from 'constants/roomConstants'
+} from '../constants/roomConstants'
 
 export const roomListReducer = (state = { rooms: [] }, action) => {
   switch (action.type) {

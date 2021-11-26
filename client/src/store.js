@@ -13,10 +13,10 @@ import {
   bookingPayReducer,
   bookingListMyReducer,
   bookingListReducer,
-} from 'reducers/bookingReducer'
-import { stripePayReducer } from 'reducers/stripeReducers'
-import { roomListReducer, roomDetailsReducer } from 'reducers/roomReducers'
-import { storageReducer } from 'reducers/storageReducer'
+} from './reducers/bookingReducer'
+import { stripePayReducer } from './reducers/stripeReducers'
+import { roomListReducer, roomDetailsReducer } from './reducers/roomReducers'
+import { storageReducer } from './reducers/storageReducer'
 
 const reducer = combineReducers({
   roomList: roomListReducer,

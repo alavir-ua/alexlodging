@@ -15,8 +15,8 @@ import {
   BOOKING_LIST_FAIL,
   BOOKING_LIST_SUCCESS,
   BOOKING_LIST_REQUEST,
-} from 'constants/bookingConstants'
-import { logout } from 'actions/userActions'
+} from '../constants/bookingConstants'
+import { logout } from './userActions'
 
 export const createBooking = (booking) => async (dispatch, getState) => {
   try {

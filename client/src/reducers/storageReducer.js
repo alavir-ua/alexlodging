@@ -2,7 +2,7 @@ import {
   STORAGE_SAVE_BOOKING_DETAILS,
   STORAGE_SAVE_BILLING_ADDRESS,
   STORAGE_RESET,
-} from 'constants/storageConstants'
+} from '../constants/storageConstants'
 
 export const storageReducer = (
   state = { bookingDetails: {}, billingAddress: {} },

@@ -2,7 +2,7 @@ import agenda from './agenda.js'
 
 const scheduler = {
   checkBookingForPayment: async (id) => {
-    await agenda.schedule('in 30 second', 'checkBookingForPayment', { id })
+    await agenda.schedule('in 2 minutes', 'checkBookingForPayment', { id })
   },
 }
 
