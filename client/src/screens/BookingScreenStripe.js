@@ -263,7 +263,7 @@ const BookingScreenStripe = ({ match, history }) => {
               )}
             </ListGroup>
 
-            {!userInfo.isAdmin && (
+            {(!userInfo.isAdmin || !booking.isPaid) && (
               <ListGroup variant="flush" className="mt-4">
                 <ListGroup.Item style={{ padding: 0 }}>
                   {cardError && <Message variant="danger">{cardError}</Message>}
