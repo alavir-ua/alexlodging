@@ -11,6 +11,9 @@ import HomeScreen from './screens/HomeScreen'
 import BookingDetailsScreen from './screens/BookingDetailsScreen'
 import BillingDetailsScreen from './screens/BillingDetailsScreen'
 import BookingScreenStripe from './screens/BookingScreenStripe'
+import RoomListScreen from './screens/RoomListScreen'
+import UserListScreen from './screens/UserListScreen'
+import BookingListScreen from './screens/BookingListScreen'
 
 const App = () => {
   return (
@@ -35,6 +38,44 @@ const App = () => {
             <Route
               path="/home/search/:keyword/page/:pageNumber"
               component={HomeScreen}
+              exact
+            />
+            <Route path="/admin/userlist" component={UserListScreen} exact />
+            <Route
+              path="/admin/userlist/page/:pageNumber"
+              component={UserListScreen}
+              exact
+            />
+            <Route
+              path="/admin/userlist/search/:keyword"
+              component={UserListScreen}
+              exact
+            />
+            <Route path="/admin/roomlist" component={RoomListScreen} exact />
+            <Route
+              path="/admin/roomlist/page/:pageNumber"
+              component={RoomListScreen}
+              exact
+            />
+            <Route
+              path="/admin/roomlist/search/:keyword"
+              component={RoomListScreen}
+              exact
+            />
+
+            <Route
+              path="/admin/bookinglist"
+              component={BookingListScreen}
+              exact
+            />
+            <Route
+              path="/admin/bookinglist/page/:pageNumber"
+              component={BookingListScreen}
+              exact
+            />
+            <Route
+              path="/admin/bookinglist/search/:keyword"
+              component={BookingListScreen}
               exact
             />
             <Route component={NotFoundScreen} />

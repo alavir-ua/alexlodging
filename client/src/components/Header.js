@@ -26,7 +26,7 @@ const Header = () => {
             <Nav className="mr-auto">
               <LinkContainer to="/home">
                 <Nav.Link>
-                  <i className="fas fa-home"></i> Home
+                  <i className="fas fa-home" /> Home
                 </Nav.Link>
               </LinkContainer>
               <a
@@ -35,7 +35,7 @@ const Header = () => {
                 rel="noreferrer"
                 target="_blank"
               >
-                <i className="fab fa-github"></i> Github
+                <i className="fab fa-github" /> Github
               </a>
             </Nav>
             <Nav className="al-nav ml-auto">
@@ -51,9 +51,22 @@ const Header = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <i className="fas fa-user"></i> Login
+                    <i className="fas fa-user" /> Sign In
                   </Nav.Link>
                 </LinkContainer>
+              )}
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title="Admin menu" id="admin_menu">
+                  <LinkContainer to="/admin/userlist">
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/roomlist">
+                    <NavDropdown.Item>Rooms</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/bookinglist">
+                    <NavDropdown.Item>Bookings</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>
