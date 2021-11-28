@@ -22,6 +22,7 @@ const SideFilter = ({ setFilter }) => {
     setComfortType('All')
     setMaxCost(1000)
     setFilterData()
+    document.location.href = '/home'
   }
 
   const setFilterData = () => {

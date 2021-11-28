@@ -2,9 +2,11 @@ import dotenv from 'dotenv'
 import colors from 'colors'
 import User from './models/userModel.js'
 import Room from './models/roomModel.js'
+import Booking from './models/bookingModel.js'
 import connectDB from './config/db.js'
 import faker from 'faker'
 import hotels from './data/hotels.js'
+import moment from 'moment'
 import _ from 'lodash'
 
 dotenv.config()
@@ -15,6 +17,9 @@ const importData = async () => {
   try {
     await Room.deleteMany()
     await User.deleteMany()
+    await Booking.deleteMany()
+
+    const userUuids = []
 
     //creating Admin
     const admin = new User({
@@ -44,10 +49,14 @@ const importData = async () => {
 
       const createdUser = await user.save()
       const userUuid = createdUser._id
+      userUuids.push(userUuid)
 
       console.log(`User #${i}`.cyan, userUuid)
     }
     console.log('--------------------------------'.yellow)
+
+    //creating of 20 rooms
+    const roomUuids = []
 
     const accommodation = ['Single', 'Double', 'Triple', 'Extra Bed']
     const comfort = ['Suite', 'De Luxe', 'Duplex', 'Studio', 'Standart']
@@ -95,9 +104,77 @@ const importData = async () => {
 
       const createdRoom = await room.save()
       const roomUuid = createdRoom._id
+      roomUuids.push(roomUuid)
+
       idx += 1
       console.log(`Room #${idx}`.cyan, roomUuid)
     }
+
+    //creating of 20 bookings
+    let idy = 0
+    for (const roomUuid of roomUuids) {
+      const room = await Room.findById(roomUuid)
+
+      //get random user id
+      const randomUser = await User.findById(
+        userUuids[Math.floor(Math.random() * userUuids.length)]
+      )
+
+      const randUserUuid = randomUser._id
+
+      const futureDate = faker.date.future(0.5, new Date())
+      const pastDate = faker.date.past(0.1, new Date())
+      const leaseDuration = faker.datatype.number({
+        min: 2,
+        max: 12,
+      })
+
+      const paymentDelay = faker.datatype.number({
+        min: 1,
+        max: 19,
+      })
+
+      const paidAt = new Date(pastDate.getTime() + paymentDelay * 60000)
+      const fromDate = moment(new Date(futureDate)).format('YYYY-MM-DD')
+      const toDate = moment(
+        new Date(futureDate.getTime() + leaseDuration * 1440 * 60000)
+      ).format('YYYY-MM-DD')
+
+      const booking = new Booking({
+        user: randUserUuid,
+        room: roomUuid,
+        fromDate,
+        toDate,
+        totalDays: leaseDuration + 1,
+        paymentResult: {
+          id: 'pi_' + faker.finance.bitcoinAddress().substr(0, 24),
+          status: 'succeeded',
+          update_time: paidAt,
+          email_address: randomUser.email,
+        },
+        totalAmount: Math.trunc((leaseDuration + 1) * room.rentPerDay),
+        isPaid: true,
+        paidAt: paidAt,
+        status: 'booked',
+        createdAt: pastDate,
+        updatedAt: paidAt,
+      })
+
+      const createdBooking = await booking.save()
+
+      room.currentBookings.push({
+        booking: createdBooking._id,
+        fromDate: createdBooking.fromDate,
+        toDate: createdBooking.toDate,
+        user: createdBooking.user,
+      })
+
+      await room.save()
+
+      idy += 1
+      console.log(`Booking #${idy}`.cyan, createdBooking._id)
+    }
+
     console.log('Data Imported!'.green.inverse)
     process.exit()
   } catch (error) {
@@ -110,6 +187,7 @@ const destroyData = async () => {
   try {
     await Room.deleteMany()
     await User.deleteMany()
+    await Booking.deleteMany()
 
     console.log('Data Destroyed!'.red.inverse)
     process.exit()
