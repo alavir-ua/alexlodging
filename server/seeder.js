@@ -109,6 +109,7 @@ const importData = async () => {
       idx += 1
       console.log(`Room #${idx}`.cyan, roomUuid)
     }
+    console.log('--------------------------------'.yellow)
 
     //creating of 20 bookings
     let idy = 0
@@ -157,7 +158,6 @@ const importData = async () => {
         paidAt: paidAt,
         status: 'booked',
         createdAt: pastDate,
-        updatedAt: paidAt,
       })
 
       const createdBooking = await booking.save()
@@ -174,6 +174,7 @@ const importData = async () => {
       idy += 1
       console.log(`Booking #${idy}`.cyan, createdBooking._id)
     }
+    console.log('--------------------------------'.yellow)
 
     console.log('Data Imported!'.green.inverse)
     process.exit()
