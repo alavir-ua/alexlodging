@@ -199,6 +199,11 @@ input.range-slider {
 	float: right;
 }
 
+.al-admin-search_form {
+	max-width: 280px;
+}
+
+
 @media (max-width: 576px) {
 
 	.al-side-filter {
