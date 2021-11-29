@@ -25,7 +25,6 @@ const App = () => {
             <Route path="/" component={LandingScreen} exact />
             <Route path="/login" component={LoginScreen} exact />
             <Route path="/register" component={RegisterScreen} exact />
-            <Route path="/home" component={HomeScreen} exact />
             <Route
               path="/details/:id/:fromDate/:toDate"
               component={BookingDetailsScreen}
@@ -33,13 +32,17 @@ const App = () => {
             />
             <Route path="/billing" component={BillingDetailsScreen} exact />
             <Route path="/booking/:id" component={BookingScreenStripe} exact />
-            <Route path="/home/search/:keyword" component={HomeScreen} exact />
+
+            {/*Home page*/}
+            <Route path="/home" component={HomeScreen} exact />
             <Route path="/home/page/:pageNumber" component={HomeScreen} exact />
+            <Route path="/home/search/:keyword" component={HomeScreen} exact />
             <Route
               path="/home/search/:keyword/page/:pageNumber"
               component={HomeScreen}
               exact
             />
+            {/*Admin Users page*/}
             <Route path="/admin/userlist" component={UserListScreen} exact />
             <Route
               path="/admin/userlist/page/:pageNumber"
@@ -51,6 +54,7 @@ const App = () => {
               component={UserListScreen}
               exact
             />
+            {/*Admin Rooms page*/}
             <Route path="/admin/roomlist" component={RoomListScreen} exact />
             <Route
               path="/admin/roomlist/page/:pageNumber"
@@ -62,7 +66,15 @@ const App = () => {
               component={RoomListScreen}
               exact
             />
-
+            <Route
+              path="/admin/room/:id/edit"
+              component={
+                {
+                  /*RoomEditScreen*/
+                }
+              }
+            />
+            {/*Admin Bookings page*/}
             <Route
               path="/admin/bookinglist"
               component={BookingListScreen}
