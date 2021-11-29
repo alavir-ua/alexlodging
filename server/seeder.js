@@ -35,8 +35,8 @@ const importData = async () => {
     console.log('Admin'.green, adminUuid)
     console.log('--------------------------------'.yellow)
 
-    //creating of 5 users
-    for (let i = 1; i < 6; i++) {
+    //creating of 20 users
+    for (let i = 1; i < 21; i++) {
       const name = faker.name.findName()
       const email = (name + '@gmail.com').split(' ').join('')
 

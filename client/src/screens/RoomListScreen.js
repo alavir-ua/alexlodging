@@ -17,17 +17,7 @@ const RoomListScreen = ({ history }) => {
 
   return (
     <>
-      <Meta
-        title="Admin Rooms"
-        style="
-       main {
-            background: #FFFFFF;
-            min-height: 100vh;
-            background-position: top center;
-            background-attachment: fixed;
-        }
-    "
-      />
+      <Meta title="Admin Rooms" />
       <Row className="mt-4 al-box-shadow">
         <Col md={12}>
           <h1>RoomListScreen for Admin</h1>

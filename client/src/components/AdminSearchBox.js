@@ -17,8 +17,7 @@ const AdminSearchBox = ({ history }) => {
     }
   }, [location.pathname])
 
-  const submitHandler = (e) => {
-    e.preventDefault()
+  const setKeywordHandler = () => {
     if (keyword.trim()) {
       if (location.pathname.match(/\/admin\/roomlist/) !== null) {
         history.push(`/admin/roomlist/search/${keyword}`)
@@ -39,7 +38,7 @@ const AdminSearchBox = ({ history }) => {
   }
 
   return (
-    <InputGroup onSubmit={submitHandler}>
+    <InputGroup>
       <FormControl
         type="text"
         name="q"
@@ -47,7 +46,11 @@ const AdminSearchBox = ({ history }) => {
         placeholder={placeholder}
         className="al-admin-search_input"
       />
-      <Button type="submit" variant="outline-success" className="p-2">
+      <Button
+        onClick={setKeywordHandler}
+        variant="outline-success"
+        className="p-2"
+      >
         Search
       </Button>
     </InputGroup>

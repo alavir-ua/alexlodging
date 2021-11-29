@@ -18,6 +18,13 @@ h1, h2, h3, h4, h5, h6, label, hr {
 	color: #00004d;
 }
 
+main {
+	background-color: rgba(143, 188, 143, 0.95);
+	min-height: 100vh;
+	background-position: top center;
+	background-attachment: fixed;
+}
+
 .al-nav {
 	margin-left: auto;
 }
@@ -54,6 +61,14 @@ h1, h2, h3, h4, h5, h6, label, hr {
 	background-color: #00004d;
 	color: white;
 	border-radius: 5px;
+}
+
+.btn-red {
+	background-color: #ff0000;
+}
+
+.btn-red:hover {
+	background-color: #b30000!important;
 }
 
 input {
@@ -201,6 +216,10 @@ input.range-slider {
 
 .al-border-yellow {
 	border-top: 1px solid yellow;
+}
+
+.al-admin-link {
+	color: #00004d;
 }
 
 @media (max-width: 576px) {
