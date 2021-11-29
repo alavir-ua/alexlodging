@@ -14,6 +14,8 @@ import BookingScreenStripe from './screens/BookingScreenStripe'
 import RoomListScreen from './screens/RoomListScreen'
 import UserListScreen from './screens/UserListScreen'
 import BookingListScreen from './screens/BookingListScreen'
+import ProfileScreen from './screens/ProfileScreen'
+import UserEditScreen from './screens/UserEditScreen'
 
 const App = () => {
   return (
@@ -25,6 +27,7 @@ const App = () => {
             <Route path="/" component={LandingScreen} exact />
             <Route path="/login" component={LoginScreen} exact />
             <Route path="/register" component={RegisterScreen} exact />
+            <Route path="/profile" component={ProfileScreen} />
             <Route
               path="/details/:id/:fromDate/:toDate"
               component={BookingDetailsScreen}
@@ -54,6 +57,7 @@ const App = () => {
               component={UserListScreen}
               exact
             />
+            <Route path="/admin/user/:id/edit" component={UserEditScreen} />
             {/*Admin Rooms page*/}
             <Route path="/admin/roomlist" component={RoomListScreen} exact />
             <Route

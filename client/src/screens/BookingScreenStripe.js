@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, ListGroup } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image } from 'react-bootstrap'
 import {
   Elements,
   CardElement,
@@ -184,7 +184,7 @@ const BookingScreenStripe = ({ match, history }) => {
       ) : (
         <Row className="al-content-box al-box-shadow" data-aos="zoom-in">
           <Col sm={12}>
-            <h3>Booking {booking._id}</h3>
+            <h3>Booking {booking._id.toUpperCase()}</h3>
           </Col>
           <Col md={7}>
             <ListGroup variant="flush">
@@ -262,29 +262,39 @@ const BookingScreenStripe = ({ match, history }) => {
                 </>
               )}
             </ListGroup>
-
-            {(!userInfo.isAdmin || !booking.isPaid) && (
-              <ListGroup variant="flush" className="mt-4">
-                <ListGroup.Item style={{ padding: 0 }}>
-                  {cardError && <Message variant="danger">{cardError}</Message>}
-                  {stripePaymentError && (
-                    <Message variant="danger">{stripePaymentError}</Message>
-                  )}
-                  {sdkReady &&
-                    (loadingStripePay ? (
-                      <Loader />
-                    ) : (
-                      <>
-                        <h3>Stripe payment</h3>
-                        <p style={{ color: 'red' }}>
-                          You must pay for the reservation within 20 minutes
-                        </p>
-                        <StripeContainer booking={bookingDetails} />
-                      </>
-                    ))}
-                </ListGroup.Item>
-              </ListGroup>
-            )}
+            {!userInfo.isAdmin ||
+              (!booking.isPaid && (
+                <ListGroup variant="flush" className="mt-4">
+                  <ListGroup.Item style={{ padding: 0 }}>
+                    {cardError && (
+                      <Message variant="danger">{cardError}</Message>
+                    )}
+                    {stripePaymentError && (
+                      <Message variant="danger">{stripePaymentError}</Message>
+                    )}
+                    {sdkReady &&
+                      (loadingStripePay ? (
+                        <Loader />
+                      ) : (
+                        <>
+                          <h3>Stripe payment</h3>
+                          <p style={{ color: 'red' }}>
+                            You must pay for the reservation within 20 minutes
+                          </p>
+                          <StripeContainer booking={bookingDetails} />
+                        </>
+                      ))}
+                  </ListGroup.Item>
+                </ListGroup>
+              ))}
+            {userInfo.isAdmin ||
+              (booking.isPaid && (
+                <Image
+                  src={booking.room.imageUrls[0]}
+                  alt={booking.room.hotelName}
+                  fluid
+                />
+              ))}
           </Col>
         </Row>
       )}

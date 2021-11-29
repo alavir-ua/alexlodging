@@ -152,7 +152,7 @@ export const listMyBookings = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/bookings/mybookings`, config)
+    const { data } = await axios.get(`/api/booking/mybookings`, config)
 
     dispatch({
       type: BOOKING_LIST_MY_SUCCESS,

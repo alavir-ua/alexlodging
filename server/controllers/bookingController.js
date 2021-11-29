@@ -32,7 +32,7 @@ const createBooking = asyncHandler(async (req, res) => {
 const getBookingById = asyncHandler(async (req, res) => {
   const booking = await Booking.findById(req.params.id)
     .populate('user', 'name email')
-    .populate('room', 'hotelName address')
+    .populate('room', 'hotelName address imageUrls')
 
   if (booking) {
     res.json(booking)
@@ -70,10 +70,12 @@ const updateBookingToPaid = asyncHandler(async (req, res) => {
 // @route   GET /api/bookings/mybookings
 // @access  Private
 const getMyBookings = asyncHandler(async (req, res) => {
-  const orders = await Booking.find({ user: req.user._id }).sort({
-    createdAt: -1,
-  })
-  res.json(orders)
+  const bookings = await Booking.find({ user: req.user._id })
+    .sort({
+      createdAt: -1,
+    })
+    .populate('room', 'hotelName address')
+  res.json(bookings)
 })
 
 // @desc    Get all bookings
