@@ -196,9 +196,12 @@ input.range-slider {
 }
 
 .al-admin-search_input {
-	width: 300px;
+	width: 280px!important;
 }
 
+.al-border-yellow {
+	border-top: 1px solid yellow;
+}
 
 @media (max-width: 576px) {
 
@@ -221,10 +224,9 @@ input.range-slider {
 		width: 85%;
 	}
 
-}
-
-.al-border-yellow {
-	border-top: 1px solid yellow;
+	.al-admin-search_input {
+		width: auto!important;
+	}
 }
 
 /*Stripe*/
