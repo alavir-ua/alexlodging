@@ -95,6 +95,8 @@ const HomeScreen = ({ match }) => {
             ))}
           </Row>
           <Paginate
+            isAdmin={false}
+            type="rooms"
             pages={pages}
             page={page}
             keyword={keyword ? keyword : ''}
