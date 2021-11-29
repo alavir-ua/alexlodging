@@ -1,7 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
+import AdminSearchBox from './AdminSearchBox'
 import { logout } from '../actions/userActions'
 
 const Header = () => {
@@ -23,21 +25,29 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <LinkContainer to="/home">
-                <Nav.Link>
-                  <i className="fas fa-home" /> Home
-                </Nav.Link>
-              </LinkContainer>
-              <a
-                className="nav-link"
-                href="https://github.com/alavir-ua/alexlodging.git"
-                rel="noreferrer"
-                target="_blank"
-              >
-                <i className="fab fa-github" /> Github
-              </a>
-            </Nav>
+            {userInfo && userInfo.isAdmin ? (
+              <Nav className="m-auto">
+                <Route
+                  render={({ history }) => <AdminSearchBox history={history} />}
+                />
+              </Nav>
+            ) : (
+              <Nav className="mr-auto">
+                <LinkContainer to="/home">
+                  <Nav.Link>
+                    <i className="fas fa-home" /> Home
+                  </Nav.Link>
+                </LinkContainer>
+                <a
+                  className="nav-link"
+                  href="https://github.com/alavir-ua/alexlodging.git"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <i className="fab fa-github" /> Github
+                </a>
+              </Nav>
+            )}
             <Nav className="al-nav ml-auto">
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">

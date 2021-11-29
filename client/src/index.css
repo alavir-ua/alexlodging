@@ -38,12 +38,8 @@ h1, h2, h3, h4, h5, h6, label, hr {
 	padding: 20px;
 }
 
-.al-search-box {
-	z-index: 1;
-}
-
 .al-search-box input {
-	height: 43px;
+	height: 2.7rem;
 }
 
 .al-content-box {
@@ -199,8 +195,8 @@ input.range-slider {
 	float: right;
 }
 
-.al-admin-search_form {
-	max-width: 280px;
+.al-admin-search_input {
+	width: 300px;
 }
 
 
@@ -216,7 +212,6 @@ input.range-slider {
 
 	.al-search-box {
 		margin-top: 0.3rem;
-		z-index: 1;
 	}
 
 	.rs-anim-fade {

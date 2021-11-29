@@ -43,14 +43,13 @@ const AdminSearchBox = ({ history }) => {
   }
 
   return (
-    <InputGroup onSubmit={submitHandler} className="al-admin-search_form">
+    <InputGroup onSubmit={submitHandler}>
       <FormControl
-        style={{ borderRadius: '3px' }}
         type="text"
         name="q"
         onChange={(e) => setKeyword(e.target.value)}
         placeholder={placeholder}
-        className="mr-sm-2 ml-sm-5"
+        className="al-admin-search_input"
       />
       <Button type="submit" variant="outline-success" className="p-2">
         Search
