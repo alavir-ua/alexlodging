@@ -1,12 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Location, useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import AdminSearchBox from './AdminSearchBox'
 import { logout } from '../actions/userActions'
 
 const Header = () => {
+  const location = useLocation()
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -25,7 +26,9 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            {userInfo && userInfo.isAdmin ? (
+            {userInfo &&
+            userInfo.isAdmin &&
+            location.pathname.match(/\/admin\//) !== null ? (
               <Nav className="m-auto">
                 <Route
                   render={({ history }) => <AdminSearchBox history={history} />}

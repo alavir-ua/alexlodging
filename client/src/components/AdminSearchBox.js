@@ -20,16 +20,12 @@ const AdminSearchBox = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault()
     if (keyword.trim()) {
-      if (location.pathname.match(/\/admin\/booklist/) !== null) {
-        history.push(`/admin/booklist/search/${keyword}`)
+      if (location.pathname.match(/\/admin\/roomlist/) !== null) {
+        history.push(`/admin/roomlist/search/${keyword}`)
       } else if (location.pathname.match(/\/admin\/userlist/) !== null) {
         history.push(`/admin/userlist/search/${keyword}`)
-      } else if (location.pathname.match(/\/admin\/categorylist/) !== null) {
-        history.push(`/admin/categorylist/search/${keyword}`)
-      } else if (location.pathname.match(/\/admin\/orderlist/) !== null) {
-        history.push(`/admin/orderlist/search/${keyword}`)
       } else {
-        history.push(`/search/${keyword}`)
+        history.push(`/admin/bookinglist/search/${keyword}`)
       }
     } else {
       if (location.pathname.match(/\/admin\/roomlist/) !== null) {
