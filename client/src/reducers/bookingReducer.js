@@ -119,9 +119,10 @@ export const bookingListReducer = (state = { bookings: [] }, action) => {
     case BOOKING_LIST_SUCCESS:
       return {
         loading: false,
-        bookings: action.payload.orders,
+        bookings: action.payload.bookings,
         pages: action.payload.pages,
         page: action.payload.page,
+        pageSize: action.payload.pageSize,
       }
     case BOOKING_LIST_FAIL:
       return {

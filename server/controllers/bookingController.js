@@ -88,8 +88,8 @@ const getBookings = asyncHandler(async (req, res) => {
 
   if (keyword) {
     const data = await Booking.find({})
-      .populate('room', 'id hotelName')
       .populate('user', 'id name')
+      .populate('room', 'id hotelName address')
       .sort({ createdAt: -1 })
 
     const filterBookings = data.filter(
@@ -102,23 +102,23 @@ const getBookings = asyncHandler(async (req, res) => {
       pageSize * page - pageSize,
       pageSize * page
     )
-    console.log(filterBookings.length)
-    console.log(bookings.length)
 
     res.json({
       bookings,
       page,
       pages: Math.ceil(filterBookings.length / pageSize),
+      pageSize,
     })
   } else {
     const count = await Booking.countDocuments({})
     const bookings = await Booking.find({})
-      .sort({ createdAt: -1 })
+      .sort({ fromDate: +1 })
       .populate('user', 'id name')
+      .populate('room', 'id hotelName address')
       .limit(pageSize)
       .skip(pageSize * (page - 1))
 
-    res.json({ bookings, page, pages: Math.ceil(count / pageSize) })
+    res.json({ bookings, page, pages: Math.ceil(count / pageSize), pageSize })
   }
 })
 

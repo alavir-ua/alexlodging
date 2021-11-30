@@ -54,7 +54,7 @@ const UserListScreen = ({ history, match }) => {
             <thead>
               <tr>
                 <th>#</th>
-                <th>ID</th>
+                <th>ID(shortened)</th>
                 <th>NAME</th>
                 <th>EMAIL</th>
                 <th>REGISTERED</th>
@@ -66,7 +66,7 @@ const UserListScreen = ({ history, match }) => {
               {users.map((user, index) => (
                 <tr key={user._id}>
                   <td>{pageSize * (pageNumber - 1) + index + 1}</td>
-                  <td>{user._id}</td>
+                  <td>{user._id.substring(12)}</td>
                   <td>{user.name}</td>
                   <td>
                     <a className="al-admin-link" href={`mailto:${user.email}`}>
