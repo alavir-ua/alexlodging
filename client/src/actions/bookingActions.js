@@ -192,7 +192,7 @@ export const listBookings =
       }
 
       const { data } = await axios.get(
-        `/api/bookings?keyword=${keyword}&pageNumber=${pageNumber}`,
+        `/api/booking?keyword=${keyword}&pageNumber=${pageNumber}`,
         config
       )
 

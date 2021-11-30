@@ -36,7 +36,7 @@ const Paginate = ({
     } else if (type === 'bookings') {
       if (isAdmin) {
         if (keyword) {
-          return `/admin/bookinglist/search/${keyword}`
+          return `/admin/bookinglist/search/${keyword}/page/${x + 1}`
         } else {
           return `/admin/bookinglist/page/${x + 1}`
         }
@@ -58,4 +58,3 @@ const Paginate = ({
 }
 
 export default Paginate
-

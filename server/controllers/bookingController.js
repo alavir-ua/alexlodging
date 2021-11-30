@@ -83,26 +83,42 @@ const getMyBookings = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getBookings = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword
+  const pageSize = Number(process.env.ADMIN_PAGE_SIZE)
+  const page = Number(req.query.pageNumber) || 1
 
   if (keyword) {
-    const data = await Booking.find({}).populate('user', 'id name')
+    const data = await Booking.find({})
+      .populate('room', 'id hotelName')
+      .populate('user', 'id name')
+      .sort({ createdAt: -1 })
 
-    const bookings = data.filter((booking) =>
-      booking.user.name.includes(`${keyword}`)
+    const filterBookings = data.filter(
+      (booking) =>
+        booking._id.toString().includes(`${keyword}`) ||
+        booking.user.name.includes(`${keyword}`) ||
+        booking.room.hotelName.includes(`${keyword}`)
     )
-    res.json({ bookings, page: 0, pages: [] })
-  } else {
-    const pageSize = Number(process.env.ADMIN_PAGE_SIZE)
-    const page = Number(req.query.pageNumber) || 1
+    const bookings = filterBookings.slice(
+      pageSize * page - pageSize,
+      pageSize * page
+    )
+    console.log(filterBookings.length)
+    console.log(bookings.length)
 
+    res.json({
+      bookings,
+      page,
+      pages: Math.ceil(filterBookings.length / pageSize),
+    })
+  } else {
     const count = await Booking.countDocuments({})
-    const orders = await Booking.find({})
+    const bookings = await Booking.find({})
       .sort({ createdAt: -1 })
       .populate('user', 'id name')
       .limit(pageSize)
       .skip(pageSize * (page - 1))
 
-    res.json({ orders, page, pages: Math.ceil(count / pageSize) })
+    res.json({ bookings, page, pages: Math.ceil(count / pageSize) })
   }
 })
 

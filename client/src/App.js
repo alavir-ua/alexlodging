@@ -94,6 +94,11 @@ const App = () => {
               component={BookingListScreen}
               exact
             />
+            <Route
+              path="/admin/bookinglist/search/:keyword/page/:pageNumber"
+              component={BookingListScreen}
+              exact
+            />
             <Route component={NotFoundScreen} />
           </Switch>
         </Container>

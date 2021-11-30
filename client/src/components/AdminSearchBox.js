@@ -13,7 +13,7 @@ const AdminSearchBox = ({ history }) => {
     } else if (location.pathname.match(/\/admin\/roomlist/) !== null) {
       setPlaceholder('Search Rooms...')
     } else {
-      setPlaceholder('Search Booking by users...')
+      setPlaceholder('id, user name, hotel name...')
     }
   }, [location.pathname])
 
