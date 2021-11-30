@@ -108,7 +108,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users/page/:pageNumber/search/:keyword
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  const pageSize = 10
+  const pageSize = Number(process.env.ADMIN_PAGE_SIZE)
   const page = Number(req.query.pageNumber) || 1
 
   const keyword = req.query.keyword
@@ -126,7 +126,7 @@ const getUsers = asyncHandler(async (req, res) => {
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
-  res.json({ users, page, pages: Math.ceil(count / pageSize) })
+  res.json({ users, page, pages: Math.ceil(count / pageSize), pageSize })
 })
 
 // @desc    Delete user

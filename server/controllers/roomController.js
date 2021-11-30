@@ -12,7 +12,7 @@ const getRooms = asyncHandler(async (req, res) => {
   const to_date = req.query.todate
 
   const page = Number(req.query.pageNumber) || 1
-  const pageSize = 5
+  const pageSize = Number(process.env.USER_PAGE_SIZE)
 
   const filter = {
     rentPerDay: { $lte: maxCost },

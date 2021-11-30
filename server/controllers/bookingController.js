@@ -87,12 +87,12 @@ const getBookings = asyncHandler(async (req, res) => {
   if (keyword) {
     const data = await Booking.find({}).populate('user', 'id name')
 
-    const orders = data.filter((order) =>
-      order.user.name.includes(`${keyword}`)
+    const bookings = data.filter((booking) =>
+      booking.user.name.includes(`${keyword}`)
     )
-    res.json({ orders, page: 0, pages: [] })
+    res.json({ bookings, page: 0, pages: [] })
   } else {
-    const pageSize = 5
+    const pageSize = Number(process.env.ADMIN_PAGE_SIZE)
     const page = Number(req.query.pageNumber) || 1
 
     const count = await Booking.countDocuments({})

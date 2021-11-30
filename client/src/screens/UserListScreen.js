@@ -18,7 +18,7 @@ const UserListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
 
   const userList = useSelector((state) => state.userList)
-  const { loading, error, users, page, pages } = userList
+  const { loading, error, users, page, pages, pageSize } = userList
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -65,7 +65,7 @@ const UserListScreen = ({ history, match }) => {
             <tbody>
               {users.map((user, index) => (
                 <tr key={user._id}>
-                  <td>{10 * (pageNumber - 1) + index + 1}</td>
+                  <td>{pageSize * (pageNumber - 1) + index + 1}</td>
                   <td>{user._id}</td>
                   <td>{user.name}</td>
                   <td>
