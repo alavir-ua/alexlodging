@@ -262,31 +262,28 @@ const BookingScreenStripe = ({ match, history }) => {
                 </>
               )}
             </ListGroup>
-            {!userInfo.isAdmin ||
-              (!booking.isPaid && (
-                <ListGroup variant="flush" className="mt-4">
-                  <ListGroup.Item style={{ padding: 0 }}>
-                    {cardError && (
-                      <Message variant="danger">{cardError}</Message>
-                    )}
-                    {stripePaymentError && (
-                      <Message variant="danger">{stripePaymentError}</Message>
-                    )}
-                    {sdkReady &&
-                      (loadingStripePay ? (
-                        <Loader />
-                      ) : (
-                        <>
-                          <h3>Stripe payment</h3>
-                          <p style={{ color: 'red' }}>
-                            You must pay for the reservation within 20 minutes
-                          </p>
-                          <StripeContainer booking={bookingDetails} />
-                        </>
-                      ))}
-                  </ListGroup.Item>
-                </ListGroup>
-              ))}
+            {(!userInfo.isAdmin || !booking.isPaid) && (
+              <ListGroup variant="flush" className="mt-4">
+                <ListGroup.Item style={{ padding: 0 }}>
+                  {cardError && <Message variant="danger">{cardError}</Message>}
+                  {stripePaymentError && (
+                    <Message variant="danger">{stripePaymentError}</Message>
+                  )}
+                  {sdkReady &&
+                    (loadingStripePay ? (
+                      <Loader />
+                    ) : (
+                      <>
+                        <h3>Stripe payment</h3>
+                        <p style={{ color: 'red' }}>
+                          You must pay for the reservation within 20 minutes
+                        </p>
+                        <StripeContainer booking={bookingDetails} />
+                      </>
+                    ))}
+                </ListGroup.Item>
+              </ListGroup>
+            )}
             {userInfo.isAdmin ||
               (booking.isPaid && (
                 <Image

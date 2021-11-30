@@ -7,6 +7,8 @@ An example of a complex application with React, Redux, Express and MongoDB
 ![Screenshot](screenshot1.png)
 ![Screenshot](screenshot2.png)
 ![Screenshot](screenshot3.png)
+![Screenshot](screenshot4.png)
+![Screenshot](screenshot5.png)
 
 ## Getting Started
 These instructions will provide you with a copy of the project that will be launched on your local computer for development and testing.
