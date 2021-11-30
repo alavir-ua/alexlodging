@@ -284,14 +284,13 @@ const BookingScreenStripe = ({ match, history }) => {
                 </ListGroup.Item>
               </ListGroup>
             )}
-            {userInfo.isAdmin ||
-              (booking.isPaid && (
-                <Image
-                  src={booking.room.imageUrls[0]}
-                  alt={booking.room.hotelName}
-                  fluid
-                />
-              ))}
+            {(userInfo.isAdmin || booking.isPaid) && (
+              <Image
+                src={booking.room.imageUrls[0]}
+                alt={booking.room.hotelName}
+                fluid
+              />
+            )}
           </Col>
         </Row>
       )}
