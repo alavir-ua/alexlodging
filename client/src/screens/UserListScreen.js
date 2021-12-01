@@ -24,7 +24,7 @@ const UserListScreen = ({ history, match }) => {
   const { userInfo } = userLogin
 
   const userDelete = useSelector((state) => state.userDelete)
-  const { success: successDelete } = userDelete
+  const { error: errorDelete, success: successDelete } = userDelete
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -45,8 +45,11 @@ const UserListScreen = ({ history, match }) => {
       <h2>Users</h2>
       {loading ? (
         <Loader />
-      ) : error ? (
-        <Message variant="danger">{error}</Message>
+      ) : error || errorDelete ? (
+        <Message variant="danger">
+          {error}
+          {errorDelete}
+        </Message>
       ) : (
         <>
           <Meta title="Admin Users" />

@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
+import Booking from '../models/bookingModel.js'
 import User from '../models/userModel.js'
 
 // @desc    Auth user & get token
@@ -149,8 +150,29 @@ const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
 
   if (user) {
-    await user.remove()
-    res.json({ message: 'User removed' })
+    const data = await Booking.find({})
+
+    const relatedBookings = data.filter(
+      (booking) => booking.user.toString() === user._id.toString()
+    )
+
+    if (relatedBookings.length) {
+      let bookingsIds = []
+
+      relatedBookings.map((booking) => {
+        bookingsIds.push(booking._id.toString().substring(12))
+      })
+
+      res.status(404)
+      throw new Error(
+        `Unable to delete user ${
+          user.name
+        }! Related bookings: ${bookingsIds.join(' , ')}`
+      )
+    } else {
+      await user.remove()
+      res.json({ message: 'User removed' })
+    }
   } else {
     res.status(404)
     throw new Error('User not found')
