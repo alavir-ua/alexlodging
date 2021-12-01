@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listBookings } from '../actions/bookingActions'
+import { deleteBooking } from '../actions/bookingActions'
 import Paginate from '../components/Paginate'
 import Meta from '../components/Meta'
 import moment from 'moment'
@@ -23,13 +24,22 @@ const BookingListScreen = ({ history, match }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  const bookingDelete = useSelector((state) => state.bookingDelete)
+  const { success: successDelete } = bookingDelete
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listBookings(keyword, pageNumber))
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo, keyword, pageNumber])
+  }, [dispatch, history, successDelete, userInfo, keyword, pageNumber])
+
+  const deleteHandler = (id) => {
+    if (window.confirm(`Really delete reservation from ${id}`)) {
+      dispatch(deleteBooking(id))
+    }
+  }
 
   return (
     <>
@@ -114,7 +124,7 @@ const BookingListScreen = ({ history, match }) => {
                     <Button
                       variant="danger"
                       className="btn-sm btn-red"
-                      /*onClick={() => deleteHandler(user._id, user.name)}*/
+                      onClick={() => deleteHandler(booking._id)}
                     >
                       <i className="fas fa-trash" />
                     </Button>

@@ -27,7 +27,7 @@ app.use(expressValidator())
 
 app.use('/api/rooms', roomRoutes)
 app.use('/api/users', userRoutes)
-app.use('/api/booking', bookingRoutes)
+app.use('/api/bookings', bookingRoutes)
 app.use('/api/stripe', stripePayRoutes)
 
 if (process.env.NODE_ENV === 'production') {

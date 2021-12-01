@@ -142,6 +142,29 @@ const checkBookingForPayment = asyncHandler(async (id) => {
   }
 })
 
+// @desc    Delete booking
+// @route   DELETE /api/bookings/:id
+// @access  Private/Admin
+const deleteBooking = asyncHandler(async (req, res) => {
+  const booking = await Booking.findById(req.params.id)
+
+  if (booking) {
+    const room = await Room.findById(booking.room)
+
+    room.currentBookings = room.currentBookings.filter((element) => {
+      return element.booking.toString() !== booking._id.toString()
+    })
+
+    await room.save()
+    await booking.remove()
+
+    res.json({ message: 'Booking removed' })
+  } else {
+    res.status(404)
+    throw new Error('Booking not found')
+  }
+})
+
 export {
   createBooking,
   getBookingById,
@@ -149,4 +172,5 @@ export {
   getMyBookings,
   getBookings,
   checkBookingForPayment,
+  deleteBooking,
 }

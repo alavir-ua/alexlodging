@@ -15,6 +15,9 @@ import {
   BOOKING_LIST_FAIL,
   BOOKING_LIST_SUCCESS,
   BOOKING_LIST_REQUEST,
+  BOOKING_DELETE_FAIL,
+  BOOKING_DELETE_REQUEST,
+  BOOKING_DELETE_SUCCESS,
 } from '../constants/bookingConstants'
 import { logout } from './userActions'
 
@@ -35,7 +38,7 @@ export const createBooking = (booking) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.post(`/api/booking`, booking, config)
+    const { data } = await axios.post(`/api/bookings`, booking, config)
 
     dispatch({
       type: BOOKING_CREATE_SUCCESS,
@@ -72,7 +75,7 @@ export const getBookingDetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/booking/${id}`, config)
+    const { data } = await axios.get(`/api/bookings/${id}`, config)
 
     dispatch({
       type: BOOKING_DETAILS_SUCCESS,
@@ -112,7 +115,7 @@ export const payBooking =
       }
 
       const { data } = await axios.put(
-        `/api/booking/${bookingId}/pay`,
+        `/api/bookings/${bookingId}/pay`,
         paymentResult,
         config
       )
@@ -152,7 +155,7 @@ export const listMyBookings = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/booking/mybookings`, config)
+    const { data } = await axios.get(`/api/bookings/mybookings`, config)
 
     dispatch({
       type: BOOKING_LIST_MY_SUCCESS,
@@ -192,7 +195,7 @@ export const listBookings =
       }
 
       const { data } = await axios.get(
-        `/api/booking?keyword=${keyword}&pageNumber=${pageNumber}`,
+        `/api/bookings?keyword=${keyword}&pageNumber=${pageNumber}`,
         config
       )
 
@@ -214,3 +217,37 @@ export const listBookings =
       })
     }
   }
+
+export const deleteBooking = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: BOOKING_DELETE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    await axios.delete(`/api/bookings/${id}`, config)
+
+    dispatch({ type: BOOKING_DELETE_SUCCESS })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: BOOKING_DELETE_FAIL,
+      payload: message,
+    })
+  }
+}

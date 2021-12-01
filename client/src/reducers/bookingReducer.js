@@ -17,6 +17,9 @@ import {
   BOOKING_LIST_FAIL,
   BOOKING_LIST_SUCCESS,
   BOOKING_LIST_REQUEST,
+  BOOKING_DELETE_FAIL,
+  BOOKING_DELETE_REQUEST,
+  BOOKING_DELETE_SUCCESS,
 } from '../constants/bookingConstants'
 
 export const bookingCreateReducer = (state = {}, action) => {
@@ -129,6 +132,19 @@ export const bookingListReducer = (state = { bookings: [] }, action) => {
         loading: false,
         error: action.payload,
       }
+    default:
+      return state
+  }
+}
+
+export const bookingDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BOOKING_DELETE_REQUEST:
+      return { loading: true }
+    case BOOKING_DELETE_SUCCESS:
+      return { loading: false, success: true }
+    case BOOKING_DELETE_FAIL:
+      return { loading: false, error: action.payload }
     default:
       return state
   }
