@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, ListGroup, Image } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Button } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 import {
   Elements,
   CardElement,
@@ -51,7 +52,7 @@ const CARD_OPTIONS = {
   },
 }
 
-const BookingScreenStripe = ({ match, history }) => {
+const BookingScreenStripe = ({ match }) => {
   const bookingId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -59,6 +60,7 @@ const BookingScreenStripe = ({ match, history }) => {
   const [cardError, setCardError] = useState('')
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const bookingStateDetails = useSelector((state) => state.bookingDetails)
   const { booking, loading, error } = bookingStateDetails
@@ -183,8 +185,16 @@ const BookingScreenStripe = ({ match, history }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <Row className="al-content-box al-box-shadow" data-aos="zoom-in">
-          <Col sm={12}>
+          <Col sm={12} className="d-flex justify-content-between mb-1">
             <h3>Booking {booking._id.toUpperCase()}</h3>
+            <Button
+              className="btn"
+              onClick={() => {
+                history.goBack()
+              }}
+            >
+              Go Back
+            </Button>
           </Col>
           <Col md={7}>
             <ListGroup variant="flush">
