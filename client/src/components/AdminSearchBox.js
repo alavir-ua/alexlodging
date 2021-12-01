@@ -9,7 +9,7 @@ const AdminSearchBox = ({ history }) => {
 
   useEffect(() => {
     if (location.pathname.match(/\/admin\/userlist/) !== null) {
-      setPlaceholder('Search Users...')
+      setPlaceholder('id, name, email...')
     } else if (location.pathname.match(/\/admin\/roomlist/) !== null) {
       setPlaceholder('Search Rooms...')
     } else {

@@ -108,7 +108,40 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users/page/:pageNumber/search/:keyword
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.keyword
   const pageSize = Number(process.env.ADMIN_PAGE_SIZE)
+  const page = Number(req.query.pageNumber) || 1
+
+  if (keyword) {
+    const data = await User.find({})
+      .select('-password')
+      .sort({ createdAt: +1 })
+
+    const filterUsers = data.filter(
+      (user) =>
+        user._id.toString().includes(`${keyword}`) ||
+        user.name.includes(`${keyword}`) ||
+        user.email.includes(`${keyword}`)
+    )
+    const users = filterUsers.slice(pageSize * page - pageSize, pageSize * page)
+
+    res.json({
+      users,
+      page,
+      pages: Math.ceil(filterUsers.length / pageSize),
+      pageSize,
+    })
+  } else {
+    const count = await User.countDocuments({})
+    const users = await User.find({})
+      .sort({ createdAt: +1 })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+
+    res.json({ users, page, pages: Math.ceil(count / pageSize), pageSize })
+  }
+
+  /*const pageSize = Number(process.env.ADMIN_PAGE_SIZE)
   const page = Number(req.query.pageNumber) || 1
 
   const keyword = req.query.keyword
@@ -126,7 +159,7 @@ const getUsers = asyncHandler(async (req, res) => {
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
-  res.json({ users, page, pages: Math.ceil(count / pageSize), pageSize })
+  res.json({ users, page, pages: Math.ceil(count / pageSize), pageSize })*/
 })
 
 // @desc    Delete user
