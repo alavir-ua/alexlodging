@@ -152,7 +152,15 @@ const ProfileScreen = ({ history }) => {
                   <tr key={booking._id}>
                     <td>{index + 1}</td>
                     <td>{booking._id}</td>
-                    <td>{booking.status.toUpperCase()}</td>
+                    <td
+                      style={
+                        booking.status === 'booked'
+                          ? { color: 'green' }
+                          : { color: 'yellow' }
+                      }
+                    >
+                      {booking.status.toUpperCase()}
+                    </td>
                     <td>{moment(booking.createdAt).format('LLL')}</td>
                     <td>
                       <LinkContainer to={`/booking/${booking._id}`}>

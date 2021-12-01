@@ -241,7 +241,7 @@ const BookingScreenStripe = ({ match, history }) => {
                   {booking.user.email}
                 </a>
               </ListGroup.Item>
-              {!booking.isPaid && (
+              {!userInfo.isAdmin && !booking.isPaid && (
                 <>
                   <ListGroup.Item>
                     <b>Address: </b>
@@ -262,7 +262,7 @@ const BookingScreenStripe = ({ match, history }) => {
                 </>
               )}
             </ListGroup>
-            {(!userInfo.isAdmin || !booking.isPaid) && (
+            {!userInfo.isAdmin && !booking.isPaid ? (
               <ListGroup variant="flush" className="mt-4">
                 <ListGroup.Item style={{ padding: 0 }}>
                   {cardError && <Message variant="danger">{cardError}</Message>}
@@ -283,8 +283,7 @@ const BookingScreenStripe = ({ match, history }) => {
                     ))}
                 </ListGroup.Item>
               </ListGroup>
-            )}
-            {(userInfo.isAdmin || booking.isPaid) && (
+            ) : (
               <Image
                 src={booking.room.imageUrls[0]}
                 alt={booking.room.hotelName}
