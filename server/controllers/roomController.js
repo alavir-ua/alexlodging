@@ -2,9 +2,9 @@ import asyncHandler from 'express-async-handler'
 import Room from '../models/roomModel.js'
 import moment from 'moment'
 
-// @desc    Fetch all rooms
-// @route   GET /api/rooms/page/:pageNumber
-// @access  Public
+// @desc    Fetch all rooms (with filters)
+// @route   GET /api/admin/rooms/page/:pageNumber/search/:keyword
+// @access  Private/Admin
 const getRooms = asyncHandler(async (req, res) => {
   const { accomodType, comfortType, maxCost } = req.body
 
@@ -84,6 +84,52 @@ const getRooms = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Fetch all rooms (with filters)
+// @route   GET /api/rooms/admin/search/:keyword/page/:pageNumber
+// @access  Public
+const getRoomsForAdmin = asyncHandler(async (req, res) => {
+  const keyword = req.query.keyword
+  const adminPageSize = Number(process.env.ADMIN_PAGE_SIZE)
+  const page = Number(req.query.pageNumber) || 1
+
+  if (keyword) {
+    const data = await Room.find({}).sort({ createdAt: +1 })
+
+    const filterRooms = data.filter(
+      (room) =>
+        room._id.toString().includes(`${keyword}`) ||
+        room.hotelName.includes(`${keyword}`) ||
+        room.address.includes(`${keyword}`) ||
+        room.comfortType.includes(`${keyword}`) ||
+        room.accommodationType.includes(`${keyword}`)
+    )
+    const rooms = filterRooms.slice(
+      adminPageSize * page - adminPageSize,
+      adminPageSize * page
+    )
+
+    res.json({
+      rooms,
+      page,
+      pages: Math.ceil(filterRooms.length / adminPageSize),
+      adminPageSize,
+    })
+  } else {
+    const count = await Room.countDocuments({})
+    const rooms = await Room.find({})
+      .sort({ createdAt: +1 })
+      .limit(adminPageSize)
+      .skip(adminPageSize * (page - 1))
+
+    res.json({
+      rooms,
+      page,
+      pages: Math.ceil(count / adminPageSize),
+      adminPageSize,
+    })
+  }
+})
+
 // @desc    Fetch single room
 // @route   GET /api/rooms/:id
 // @access  Public
@@ -100,6 +146,7 @@ const getRoomById = asyncHandler(async (req, res) => {
 
 export {
   getRooms,
+  getRoomsForAdmin,
   getRoomById,
   //deleteQuiz,
   //deleteQuizzesOfAuthor,

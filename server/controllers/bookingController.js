@@ -79,7 +79,7 @@ const getMyBookings = asyncHandler(async (req, res) => {
 })
 
 // @desc    Get all bookings
-// @route   GET /api/bookings
+// @route   GET /api/bookings/page/:pageNumber/search/:keyword
 // @access  Private/Admin
 const getBookings = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword

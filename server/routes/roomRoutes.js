@@ -2,18 +2,19 @@ import express from 'express'
 const router = express.Router()
 import {
   getRooms,
+  getRoomsForAdmin,
   getRoomById,
-  //deleteQuiz,
-  //deleteQuizzesOfAuthor,
-  //createQuiz,
-  //updateQuiz,
+  // createRoom,
+  // deleteRoom,
+  // updateRoom,
 } from '../controllers/roomController.js'
-//import { protect, admin } from '../middleware/authMiddleware.js'
+import { protect, admin } from '../middleware/authMiddleware.js'
 
 router.route('/').post(getRooms)
-//.post(protect, admin, createQuiz)
+//.post(protect, admin, createRoom)
+router.route('/admin').get(protect, admin, getRoomsForAdmin)
 router.route('/:id').get(getRoomById)
-//.delete(protect, admin, deleteQuiz)
-//.put(protect, admin, updateQuiz)
+//.delete(protect, admin, deleteRoom)
+//.put(protect, admin, updateRoom)
 
 export default router

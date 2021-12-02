@@ -10,11 +10,11 @@ const Paginate = ({
   page,
   keyword = '',
 }) => {
-  const link = (x, type, id) => {
+  const link = (x, type) => {
     if (type === 'rooms') {
       if (isAdmin) {
         if (keyword) {
-          return `/admin/roomlist/search/${keyword}`
+          return `/admin/roomlist/search/${keyword}/page/${x + 1}`
         } else {
           return `/admin/roomlist/page/${x + 1}`
         }
@@ -28,7 +28,7 @@ const Paginate = ({
     } else if (type === 'users') {
       if (isAdmin) {
         if (keyword) {
-          return `/admin/userlist/search/${keyword}`
+          return `/admin/userlist/search/${keyword}/page/${x + 1}`
         } else {
           return `/admin/userlist/page/${x + 1}`
         }
