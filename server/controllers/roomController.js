@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+import Booking from '../models/bookingModel.js'
 import Room from '../models/roomModel.js'
 import moment from 'moment'
 
@@ -144,12 +145,47 @@ const getRoomById = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Delete room
+// @route   DELETE /api/rooms/:id
+// @access  Private/Admin
+const deleteRoom = asyncHandler(async (req, res) => {
+  const room = await Room.findById(req.params.id)
+
+  if (room) {
+    const data = await Booking.find({})
+
+    const relatedBookings = data.filter(
+      (booking) => booking.room.toString() === room._id.toString()
+    )
+
+    if (relatedBookings.length) {
+      let bookingsIds = []
+
+      relatedBookings.map((booking) => {
+        bookingsIds.push(booking._id.toString().substring(12))
+      })
+
+      res.status(404)
+      throw new Error(
+        `Unable to delete room ${room._id
+          .toString()
+          .substring(12)}! Related bookings: ${bookingsIds.join(' , ')}`
+      )
+    } else {
+      await room.remove()
+      res.json({ message: 'Room removed' })
+    }
+  } else {
+    res.status(404)
+    throw new Error('Room not found')
+  }
+})
+
 export {
   getRooms,
   getRoomsForAdmin,
   getRoomById,
-  //deleteQuiz,
-  //deleteQuizzesOfAuthor,
-  //createQuiz,
-  //updateQuiz,
+  deleteRoom,
+  //createRoom,
+  //updateRoom,
 }

@@ -24,6 +24,7 @@ import {
   roomListReducer,
   roomAdminListReducer,
   roomDetailsReducer,
+  roomDeleteReducer,
 } from './reducers/roomReducers'
 import { storageReducer } from './reducers/storageReducer'
 
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   roomList: roomListReducer,
   roomAdminList: roomAdminListReducer,
   roomDetails: roomDetailsReducer,
+  roomDelete: roomDeleteReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,

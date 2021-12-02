@@ -9,7 +9,11 @@ import {
   ROOM_DETAILS_REQUEST,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
+  ROOM_DELETE_REQUEST,
+  ROOM_DELETE_SUCCESS,
+  ROOM_DELETE_FAIL,
 } from '../constants/roomConstants'
+import { logout } from './userActions'
 
 export const listRooms =
   (
@@ -104,6 +108,40 @@ export const listRoomDetails = (id) => async (dispatch) => {
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
+    })
+  }
+}
+
+export const deleteRoom = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ROOM_DELETE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    await axios.delete(`/api/rooms/${id}`, config)
+
+    dispatch({ type: ROOM_DELETE_SUCCESS })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ROOM_DELETE_FAIL,
+      payload: message,
     })
   }
 }

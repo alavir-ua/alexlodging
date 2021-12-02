@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
-import { listAdminRooms } from '../actions/roomActions'
+import { listAdminRooms, deleteRoom } from '../actions/roomActions'
 import Meta from '../components/Meta'
+import { Link } from 'react-router-dom'
 
 const RoomListScreen = ({ history, match }) => {
   const keyword = match.params.keyword
@@ -20,8 +21,8 @@ const RoomListScreen = ({ history, match }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  // const userDelete = useSelector((state) => state.userDelete)
-  // const { error: errorDelete, success: successDelete } = userDelete
+  const roomDelete = useSelector((state) => state.roomDelete)
+  const { error: errorDelete, success: successDelete } = roomDelete
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -29,11 +30,11 @@ const RoomListScreen = ({ history, match }) => {
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, /*successDelete,*/ userInfo, pageNumber, keyword])
+  }, [dispatch, history, successDelete, userInfo, pageNumber, keyword])
 
   const deleteHandler = (id) => {
-    if (window.confirm(`Really delete room from ${id}`)) {
-      // dispatch(deleteRoom(id))
+    if (window.confirm(`Really delete room from ${id.substring(12)}`)) {
+      dispatch(deleteRoom(id))
     }
   }
 
@@ -42,10 +43,10 @@ const RoomListScreen = ({ history, match }) => {
       <h2>Rooms</h2>
       {loading ? (
         <Loader />
-      ) : error /*|| errorDelete*/ ? (
+      ) : error || errorDelete ? (
         <Message variant="danger">
           {error}
-          {/* {errorDelete}*/}
+          {errorDelete}
         </Message>
       ) : (
         <>
@@ -59,7 +60,7 @@ const RoomListScreen = ({ history, match }) => {
                 <th>TYPE</th>
                 <th>COMFORT</th>
                 <th>COST</th>
-                <th>BOOKINGS</th>
+                <th>CURRENT BOOKINGS</th>
                 <th></th>
               </tr>
             </thead>
@@ -76,17 +77,17 @@ const RoomListScreen = ({ history, match }) => {
                   <td>{room.comfortType}</td>
                   <td>${room.rentPerDay}</td>
                   <td>
-                    <ul style={{ listStyle: 'none' }}>
-                      {room.currentBookings.map((booking) => {
-                        return (
-                          <li>
-                            <b>from:</b>
-                            {booking.fromDate} <b>to:</b>
-                            {booking.toDate}
-                          </li>
-                        )
-                      })}
-                    </ul>
+                    {room.currentBookings.map((element, index) => {
+                      return (
+                        <Link
+                          key={index}
+                          to={`/booking/${element.booking}`}
+                          className="d-block al-admin-link"
+                        >
+                          {element.booking.toString().substring(12)}
+                        </Link>
+                      )
+                    })}
                   </td>
                   <td>
                     <LinkContainer to={`/admin/room/${room._id}/edit`}>
