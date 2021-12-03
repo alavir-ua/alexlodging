@@ -114,7 +114,7 @@ const getUsers = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1
 
   if (keyword) {
-    const data = await User.find({})
+    const data = await User.find({ email: { $ne: 'admin@gmail.com' } })
       .select('-password')
       .sort({ createdAt: +1 })
 
@@ -133,8 +133,10 @@ const getUsers = asyncHandler(async (req, res) => {
       pageSize,
     })
   } else {
-    const count = await User.countDocuments({})
-    const users = await User.find({})
+    const count = await User.countDocuments({
+      email: { $ne: 'admin@gmail.com' },
+    })
+    const users = await User.find({ email: { $ne: 'admin@gmail.com' } })
       .sort({ createdAt: +1 })
       .limit(pageSize)
       .skip(pageSize * (page - 1))

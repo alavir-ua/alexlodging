@@ -99,7 +99,7 @@ const importData = async () => {
             max: 8,
           })
         ),
-        description: faker.lorem.paragraphs(),
+        description: faker.lorem.paragraph(),
       })
 
       const createdRoom = await room.save()
