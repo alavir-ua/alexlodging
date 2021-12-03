@@ -159,6 +159,14 @@ const hotels = [
       'https://cf.bstatic.com/xdata/images/hotel/max1024x768/306107520.jpg?k=263520ce01e603b83f11c65df93df17e55a0512d35b021543b8bcee51dba4f07&o=&hp=1',
     ],
   },
+  {
+    name: 'Chapter Highbury I',
+    images: [
+      'https://cf.bstatic.com/xdata/images/hotel/max1024x768/306994152.jpg?k=2213a82ec6dd2fe951933f7722fe17abbcc57d27a7edc188719c493f6e70d23d&o=&hp=1',
+      'https://cf.bstatic.com/xdata/images/hotel/max1024x768/306994148.jpg?k=58e28394d2df089abdaf4b8aa94984d1fefc27760746b4f67bca806e2c145c5f&o=&hp=1',
+      'https://cf.bstatic.com/xdata/images/hotel/max1024x768/306994101.jpg?k=f3b75ec65858429da5d4b31c290b344179bd5619ec3bc9efef1891cf293760cc&o=&hp=1',
+    ],
+  },
 ]
 
 export default hotels
