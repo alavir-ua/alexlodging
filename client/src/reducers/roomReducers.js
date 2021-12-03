@@ -5,6 +5,10 @@ import {
   ROOM_ADMIN_LIST_REQUEST,
   ROOM_ADMIN_LIST_SUCCESS,
   ROOM_ADMIN_LIST_FAIL,
+  ROOM_CREATE_REQUEST,
+  ROOM_CREATE_SUCCESS,
+  ROOM_CREATE_FAIL,
+  ROOM_CREATE_RESET,
   ROOM_DETAILS_REQUEST,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
@@ -46,6 +50,21 @@ export const roomAdminListReducer = (state = { rooms: [] }, action) => {
       }
     case ROOM_ADMIN_LIST_FAIL:
       return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const roomCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ROOM_CREATE_REQUEST:
+      return { loading: true }
+    case ROOM_CREATE_SUCCESS:
+      return { loading: false, success: true, room: action.payload }
+    case ROOM_CREATE_FAIL:
+      return { loading: false, error: action.payload }
+    case ROOM_CREATE_RESET:
+      return {}
     default:
       return state
   }

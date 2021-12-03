@@ -6,6 +6,9 @@ import {
   ROOM_ADMIN_LIST_REQUEST,
   ROOM_ADMIN_LIST_SUCCESS,
   ROOM_ADMIN_LIST_FAIL,
+  ROOM_CREATE_REQUEST,
+  ROOM_CREATE_SUCCESS,
+  ROOM_CREATE_FAIL,
   ROOM_DETAILS_REQUEST,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
@@ -90,6 +93,43 @@ export const listAdminRooms =
       })
     }
   }
+
+export const createRoom = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ROOM_CREATE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.post(`/api/rooms/create`, {}, config)
+
+    dispatch({
+      type: ROOM_CREATE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ROOM_CREATE_FAIL,
+      payload: message,
+    })
+  }
+}
 
 export const listRoomDetails = (id) => async (dispatch) => {
   try {

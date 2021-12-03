@@ -94,7 +94,7 @@ const getRoomsForAdmin = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1
 
   if (keyword) {
-    const data = await Room.find({}).sort({ createdAt: +1 })
+    const data = await Room.find({}).sort({ createdAt: -1 })
 
     const filterRooms = data.filter(
       (room) =>
@@ -118,7 +118,7 @@ const getRoomsForAdmin = asyncHandler(async (req, res) => {
   } else {
     const count = await Room.countDocuments({})
     const rooms = await Room.find({})
-      .sort({ createdAt: +1 })
+      .sort({ createdAt: -1 })
       .limit(adminPageSize)
       .skip(adminPageSize * (page - 1))
 
@@ -129,6 +129,26 @@ const getRoomsForAdmin = asyncHandler(async (req, res) => {
       adminPageSize,
     })
   }
+})
+
+// @desc    Create a room
+// @route   POST /api/rooms/create
+// @access  Private/Admin
+const createRoom = asyncHandler(async (req, res) => {
+  const room = new Room({
+    hotelName: 'Sample hotel name',
+    address: 'Sample address',
+    accommodationType: 'Sample type',
+    comfortType: 'Sample comfort type',
+    rentPerDay: 0,
+    imageUrls: [],
+    currentBookings: [],
+    amenities: [],
+    description: 'Sample description',
+  })
+
+  const createdRoom = await room.save()
+  res.status(201).json(createdRoom)
 })
 
 // @desc    Fetch single room
@@ -186,6 +206,6 @@ export {
   getRoomsForAdmin,
   getRoomById,
   deleteRoom,
-  //createRoom,
+  createRoom,
   //updateRoom,
 }

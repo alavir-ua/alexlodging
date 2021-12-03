@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
-import { listAdminRooms, deleteRoom } from '../actions/roomActions'
+import { listAdminRooms, deleteRoom, createRoom } from '../actions/roomActions'
+import { ROOM_CREATE_RESET } from '../constants/roomConstants'
 import Meta from '../components/Meta'
 import { Link } from 'react-router-dom'
 
@@ -22,15 +23,44 @@ const RoomListScreen = ({ history, match }) => {
   const { userInfo } = userLogin
 
   const roomDelete = useSelector((state) => state.roomDelete)
-  const { error: errorDelete, success: successDelete } = roomDelete
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = roomDelete
+
+  const roomCreate = useSelector((state) => state.roomCreate)
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    room: createdRoom,
+  } = roomCreate
 
   useEffect(() => {
+    dispatch({ type: ROOM_CREATE_RESET })
+
     if (userInfo && userInfo.isAdmin) {
       dispatch(listAdminRooms(keyword, pageNumber))
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, successDelete, userInfo, pageNumber, keyword])
+
+    if (successCreate) {
+      history.push(`/admin/room/${createdRoom._id}/edit`)
+    } else {
+      dispatch(listAdminRooms(keyword, pageNumber))
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdRoom,
+    pageNumber,
+    keyword,
+  ])
 
   const deleteHandler = (id) => {
     if (window.confirm(`Really delete room from ${id.substring(12)}`)) {
@@ -38,19 +68,29 @@ const RoomListScreen = ({ history, match }) => {
     }
   }
 
+  const createRoomHandler = () => {
+    dispatch(createRoom())
+  }
+
   return (
     <>
-      <h2>Rooms</h2>
+      <Meta title="Admin Rooms" />
+      <Col sm={12} className="d-flex justify-content-between">
+        <h2>Rooms</h2>
+        <Button className="my-2" onClick={createRoomHandler}>
+          <i className="fas fa-plus" /> Add Room
+        </Button>
+      </Col>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader />
-      ) : error || errorDelete ? (
-        <Message variant="danger">
-          {error}
-          {errorDelete}
-        </Message>
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Meta title="Admin Rooms" />
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
