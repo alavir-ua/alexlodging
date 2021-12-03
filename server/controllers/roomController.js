@@ -201,11 +201,46 @@ const deleteRoom = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Update a room
+// @route   PUT /api/rooms/:id
+// @access  Private/Admin
+const updateRoom = asyncHandler(async (req, res) => {
+  const {
+    hotelName,
+    address,
+    accommodationType,
+    comfortType,
+    rentPerDay,
+    imageUrls,
+    amenities,
+    description,
+  } = req.body
+
+  const room = await Room.findById(req.params.id)
+
+  if (room) {
+    room.hotelName = hotelName
+    room.address = address
+    room.accommodationType = accommodationType
+    room.comfortType = comfortType
+    room.rentPerDay = rentPerDay
+    room.imageUrls = imageUrls
+    room.amenities = amenities
+    room.description = description
+
+    const updatedRoom = await room.save()
+    res.json(updatedRoom)
+  } else {
+    res.status(404)
+    throw new Error('Room not found')
+  }
+})
+
 export {
   getRooms,
   getRoomsForAdmin,
   getRoomById,
   deleteRoom,
   createRoom,
-  //updateRoom,
+  updateRoom,
 }

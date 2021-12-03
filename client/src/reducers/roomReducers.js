@@ -9,6 +9,10 @@ import {
   ROOM_CREATE_SUCCESS,
   ROOM_CREATE_FAIL,
   ROOM_CREATE_RESET,
+  ROOM_UPDATE_REQUEST,
+  ROOM_UPDATE_SUCCESS,
+  ROOM_UPDATE_FAIL,
+  ROOM_UPDATE_RESET,
   ROOM_DETAILS_REQUEST,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
@@ -65,6 +69,21 @@ export const roomCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload }
     case ROOM_CREATE_RESET:
       return {}
+    default:
+      return state
+  }
+}
+
+export const roomUpdateReducer = (state = { room: {} }, action) => {
+  switch (action.type) {
+    case ROOM_UPDATE_REQUEST:
+      return { loading: true }
+    case ROOM_UPDATE_SUCCESS:
+      return { loading: false, success: true, room: action.payload }
+    case ROOM_UPDATE_FAIL:
+      return { loading: false, error: action.payload }
+    case ROOM_UPDATE_RESET:
+      return { room: {} }
     default:
       return state
   }

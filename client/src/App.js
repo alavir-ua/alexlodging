@@ -16,6 +16,7 @@ import UserListScreen from './screens/UserListScreen'
 import BookingListScreen from './screens/BookingListScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import UserEditScreen from './screens/UserEditScreen'
+import RoomEditScreen from './screens/RoomEditScreen'
 
 const App = () => {
   return (
@@ -80,14 +81,7 @@ const App = () => {
               component={RoomListScreen}
               exact
             />
-            <Route
-              path="/admin/room/:id/edit"
-              component={
-                {
-                  /*RoomEditScreen*/
-                }
-              }
-            />
+            <Route path="/admin/room/:id/edit" component={RoomEditScreen} />
             {/*Admin Bookings page*/}
             <Route
               path="/admin/bookinglist"

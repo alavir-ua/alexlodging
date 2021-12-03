@@ -9,6 +9,9 @@ import {
   ROOM_CREATE_REQUEST,
   ROOM_CREATE_SUCCESS,
   ROOM_CREATE_FAIL,
+  ROOM_UPDATE_REQUEST,
+  ROOM_UPDATE_SUCCESS,
+  ROOM_UPDATE_FAIL,
   ROOM_DETAILS_REQUEST,
   ROOM_DETAILS_SUCCESS,
   ROOM_DETAILS_FAIL,
@@ -126,6 +129,45 @@ export const createRoom = () => async (dispatch, getState) => {
     }
     dispatch({
       type: ROOM_CREATE_FAIL,
+      payload: message,
+    })
+  }
+}
+
+export const updateRoom = (room) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ROOM_UPDATE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(`/api/rooms/${room._id}`, room, config)
+
+    dispatch({
+      type: ROOM_UPDATE_SUCCESS,
+      payload: data,
+    })
+    dispatch({ type: ROOM_DETAILS_SUCCESS, payload: data })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ROOM_UPDATE_FAIL,
       payload: message,
     })
   }

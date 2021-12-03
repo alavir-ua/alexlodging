@@ -26,6 +26,7 @@ import {
   roomDetailsReducer,
   roomDeleteReducer,
   roomCreateReducer,
+  roomUpdateReducer,
 } from './reducers/roomReducers'
 import { storageReducer } from './reducers/storageReducer'
 
@@ -35,6 +36,7 @@ const reducer = combineReducers({
   roomDetails: roomDetailsReducer,
   roomDelete: roomDeleteReducer,
   roomCreate: roomCreateReducer,
+  roomUpdate: roomUpdateReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
