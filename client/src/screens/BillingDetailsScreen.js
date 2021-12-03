@@ -63,6 +63,8 @@ const BillingDetailsScreen = ({ history }) => {
             background: url(https://images.unsplash.com/photo-1600293558767-d66eaa33a38e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1536&q=80);
             min-height: 100vh;
             background-position: top center;
+            background-repeat: no-repeat;
+            background-size: auto;
             background-attachment: fixed;
         }
     "

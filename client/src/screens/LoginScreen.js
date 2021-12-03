@@ -40,6 +40,8 @@ const LoginScreen = ({ location, history }) => {
             background: url(https://images.unsplash.com/photo-1600447653990-02fbebf8dd24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80);
             min-height: 100vh;
             background-position: top center;
+            background-repeat: no-repeat;
+            background-size: auto;
             background-attachment: fixed;
         }
     "
