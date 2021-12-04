@@ -20,7 +20,8 @@
     "Node js",
     "React",
     "MongoDB",
-    "Redux"
+    "Redux",
+		"Stripe"
   ],
   "author": "Oleksii Fedorenko <alavir.web.dev@gmail.com>",
   "license": "MIT",

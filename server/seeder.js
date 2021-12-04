@@ -55,7 +55,7 @@ const importData = async () => {
     }
     console.log('--------------------------------'.yellow)
 
-    //creating of 20 rooms
+    //creating of 21 rooms
     const roomUuids = []
 
     const accommodation = ['Single', 'Double', 'Triple', 'Extra Bed']
@@ -111,7 +111,7 @@ const importData = async () => {
     }
     console.log('--------------------------------'.yellow)
 
-    //creating of 20 bookings
+    //creating of 21 bookings
     let idy = 0
     for (const roomUuid of roomUuids) {
       const room = await Room.findById(roomUuid)
