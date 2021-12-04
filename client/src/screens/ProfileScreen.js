@@ -163,11 +163,19 @@ const ProfileScreen = ({ history }) => {
                     </td>
                     <td>{moment(booking.createdAt).format('LLL')}</td>
                     <td>
-                      <LinkContainer to={`/booking/${booking._id}`}>
-                        <Button className="btn-sm" variant="light">
-                          Details
-                        </Button>
-                      </LinkContainer>
+                      {booking.isPaid ? (
+                        <LinkContainer to={`/booking/${booking._id}`}>
+                          <Button className="btn-sm" variant="light">
+                            Details
+                          </Button>
+                        </LinkContainer>
+                      ) : (
+                        <LinkContainer to={`/billing/${booking._id}`}>
+                          <Button className="btn-sm" variant="light">
+                            Pay Booking
+                          </Button>
+                        </LinkContainer>
+                      )}
                     </td>
                   </tr>
                 ))}

@@ -35,6 +35,7 @@ const App = () => {
               exact
             />
             <Route path="/billing" component={BillingDetailsScreen} exact />
+            <Route path="/billing/:id" component={BillingDetailsScreen} exact />
             <Route path="/booking/:id" component={BookingScreenStripe} exact />
 
             {/*Home page*/}
