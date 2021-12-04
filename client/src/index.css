@@ -145,6 +145,10 @@ input {
 	color: #00004d;
 }
 
+.material-icons-green {
+	color: green;
+}
+
 .al-side-filter {
 	width: 250px;
 	position: fixed;

@@ -80,7 +80,6 @@ const Room = ({ room, fromdate, todate }) => {
         <Modal.Header>
           <Modal.Title>{room.hotelName}</Modal.Title>
           <Button
-            /*style={{ float: 'right' }}*/
             className="float-end"
             variant="secondary"
             onClick={handleClose}

@@ -97,17 +97,17 @@ const RoomEditScreen = ({ match, history }) => {
   const accommodationArr = ['Single', 'Double', 'Triple', 'Extra Bed']
   const comfortArr = ['Suite', 'De Luxe', 'Duplex', 'Studio', 'Standart']
   const amenitiesArr = [
-    'location_city',
-    'wifi',
-    'bathtub',
-    'ac_unit',
-    'family_restroom',
-    'fitness_center',
-    'smoke_free',
-    'wine_bar',
-    'local_parking',
-    'coffee_maker',
-    'accessible',
+    { name: 'Location city', value: 'location_city' },
+    { name: 'Cell-free wi-fi', value: 'wifi' },
+    { name: 'Own bathroom', value: 'bathtub' },
+    { name: 'Air conditioning', value: 'ac_unit' },
+    { name: 'Family room', value: 'family_restroom' },
+    { name: 'Fitness center', value: 'fitness_center' },
+    { name: 'Non-smoking room', value: 'smoke_free' },
+    { name: 'Bar', value: 'wine_bar' },
+    { name: 'Parking', value: 'local_parking' },
+    { name: 'Tea / coffee maker', value: 'coffee_maker' },
+    { name: 'Facilities for disabled', value: 'accessible' },
   ]
 
   return (
@@ -193,21 +193,37 @@ const RoomEditScreen = ({ match, history }) => {
               />
             </Form.Group>
 
-            <Form.Group controlId="amenities">
+            <Form.Group controlId="amenities" className="mt-2">
               <Form.Label>
-                Amenities:&nbsp;
-                {amenities.map((amenity) => amenity + ', ')}
+                Current amenities:&nbsp;
+                {amenities.map((element) => {
+                  return (
+                    <span
+                      className="material-icons"
+                      key={element}
+                      title={element}
+                    >
+                      {element}
+                    </span>
+                  )
+                })}
               </Form.Label>
 
               {selectedAmenities.length !== 0 && (
-                <ul>
+                <>
                   <h6 className="mt-3" style={{ color: '#00b300' }}>
-                    Selected amenities
+                    Selected amenities:
                   </h6>
                   {selectedAmenities.map((amenity) => (
-                    <li key={amenity}>{amenity}</li>
+                    <span
+                      className="material-icons material-icons-green"
+                      key={amenity}
+                      title={amenity}
+                    >
+                      {amenity}
+                    </span>
                   ))}
-                </ul>
+                </>
               )}
 
               <Form.Control
@@ -217,8 +233,8 @@ const RoomEditScreen = ({ match, history }) => {
                 multiple
               >
                 {amenitiesArr.map((amenity) => (
-                  <option key={amenity} value={amenity}>
-                    {amenity}
+                  <option key={amenity.name} value={amenity.value}>
+                    {amenity.name}
                   </option>
                 ))}
               </Form.Control>
