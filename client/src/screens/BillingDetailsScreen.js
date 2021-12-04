@@ -10,7 +10,7 @@ import { createBooking } from '../actions/bookingActions'
 import { USER_DETAILS_RESET } from '../constants/userConstants'
 import { BOOKING_CREATE_RESET } from '../constants/bookingConstants'
 
-const BillingDetailsScreen = ({ history }) => {
+const BillingDetailsScreen = ({ history, match }) => {
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [postalCode, setPostalCode] = useState('')
@@ -41,21 +41,25 @@ const BillingDetailsScreen = ({ history }) => {
     ) {
       dispatch(saveBillingAddress({ address, city, postalCode, country }))
     }
-    dispatch(
-      createBooking({
-        room: bookingDetails.room,
-        user: bookingDetails.user,
-        fromDate: bookingDetails.fromDate,
-        toDate: bookingDetails.toDate,
-        totalAmount: bookingDetails.totalAmount,
-        totalDays: bookingDetails.totalDays,
-      })
-    )
+    if (match.params.id) {
+      history.push(`/booking/${match.params.id}`)
+    } else {
+      dispatch(
+        createBooking({
+          room: bookingDetails.room,
+          user: bookingDetails.user,
+          fromDate: bookingDetails.fromDate,
+          toDate: bookingDetails.toDate,
+          totalAmount: bookingDetails.totalAmount,
+          totalDays: bookingDetails.totalDays,
+        })
+      )
+    }
   }
 
   return (
     <>
-      <CheckoutSteps step1 step2 step3 />
+      <CheckoutSteps step1 step2 step3 id={match.params.id} />
       <Meta
         title="Billing Details"
         style="
