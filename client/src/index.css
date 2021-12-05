@@ -228,14 +228,6 @@ input.range-slider {
 
 @media (max-width: 576px) {
 
-	.al-side-filter {
-		width: 250px;
-		position: absolute;
-		left: 0;
-		top: 13.3rem;
-		z-index: 2;
-	}
-
 	.al-search-box {
 		margin-top: 0.3rem;
 	}
