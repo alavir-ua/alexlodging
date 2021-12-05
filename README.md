@@ -9,6 +9,7 @@ An example of a complex application with React, Redux, Express, MongoDB and Stri
 ![Screenshot](screenshot3.png)
 ![Screenshot](screenshot4.png)
 ![Screenshot](screenshot5.png)
+![Screenshot](screenshot6.png)
 
 ## Getting Started
 These instructions will provide you with a copy of the project that will be launched on your local computer for development and testing.
