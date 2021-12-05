@@ -30,6 +30,8 @@ app.use('/api/users', userRoutes)
 app.use('/api/bookings', bookingRoutes)
 app.use('/api/stripe', stripePayRoutes)
 
+const __dirname = path.resolve()
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/client/build')))
 
