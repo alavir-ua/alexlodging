@@ -8,11 +8,13 @@ import {
   getMyBookings,
   getBookings,
   deleteBooking,
+  getChartData,
 } from '../controllers/bookingController.js'
 import { protect, admin, owner } from '../middleware/authMiddleware.js'
 
 router.route('/').post(protect, createBooking).get(protect, admin, getBookings)
 router.route('/mybookings').get(protect, getMyBookings)
+router.route('/chart').get(/*protect, admin,*/ getChartData)
 router
   .route('/:id')
   .get(protect, owner, getBookingById)

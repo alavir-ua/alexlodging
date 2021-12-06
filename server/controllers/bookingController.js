@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import Booking from '../models/bookingModel.js'
 import Room from '../models/roomModel.js'
 import scheduler from '../agenda/scheduler.js'
+import moment from 'moment'
 
 // @desc    Create new booking
 // @route   POST /api/booking
@@ -26,6 +27,7 @@ const createBooking = asyncHandler(async (req, res) => {
 
   res.status(201).json(createdBooking)
 })
+
 // @desc    Get booking by ID
 // @route   GET /api/bookings/:id
 // @access  Private
@@ -165,6 +167,38 @@ const deleteBooking = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Get data for admin chart
+// @route   GET /api/bookings/chart
+// @access  Private/Admin
+const getChartData = asyncHandler(async (req, res) => {
+  /*get data for the last month */
+
+  // const now = new Date()
+  // const temp = new Date(now).setMonth(now.getMonth() - 1)
+  // const priorOne = new Date(temp)
+
+  const bookings = await Booking.find({
+    isPaid: true,
+    /*paidAt: { $gte: priorOne, $lt: new Date() },*/
+  }).sort({ paidAt: 1 })
+
+  if (bookings) {
+    const data = {
+      dates: [],
+      amounts: [],
+    }
+
+    bookings.map((obj) => {
+      data.dates.push(moment(obj.paidAt).format('DD-MM-YYYY'))
+      data.amounts.push(obj.totalAmount)
+    })
+    res.json(data)
+  } else {
+    res.status(404)
+    throw new Error('Booking not found')
+  }
+})
+
 export {
   createBooking,
   getBookingById,
@@ -173,4 +207,5 @@ export {
   getBookings,
   checkBookingForPayment,
   deleteBooking,
+  getChartData,
 }
