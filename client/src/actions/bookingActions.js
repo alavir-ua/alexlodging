@@ -18,6 +18,9 @@ import {
   BOOKING_DELETE_FAIL,
   BOOKING_DELETE_REQUEST,
   BOOKING_DELETE_SUCCESS,
+  CHART_DATA_REQUEST,
+  CHART_DATA_SUCCESS,
+  CHART_DATA_FAIL,
 } from '../constants/bookingConstants'
 import { logout } from './userActions'
 
@@ -247,6 +250,43 @@ export const deleteBooking = (id) => async (dispatch, getState) => {
     }
     dispatch({
       type: BOOKING_DELETE_FAIL,
+      payload: message,
+    })
+  }
+}
+
+export const getChartData = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CHART_DATA_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get(`/api/bookings/chart`, config)
+
+    dispatch({
+      type: CHART_DATA_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: CHART_DATA_FAIL,
       payload: message,
     })
   }

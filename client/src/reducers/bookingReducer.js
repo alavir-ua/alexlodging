@@ -20,6 +20,9 @@ import {
   BOOKING_DELETE_FAIL,
   BOOKING_DELETE_REQUEST,
   BOOKING_DELETE_SUCCESS,
+  CHART_DATA_REQUEST,
+  CHART_DATA_SUCCESS,
+  CHART_DATA_FAIL,
 } from '../constants/bookingConstants'
 
 export const bookingCreateReducer = (state = {}, action) => {
@@ -145,6 +148,32 @@ export const bookingDeleteReducer = (state = {}, action) => {
       return { loading: false, success: true }
     case BOOKING_DELETE_FAIL:
       return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const chartDataReducer = (
+  state = { loading: true, dates: [], amounts: [] },
+  action
+) => {
+  switch (action.type) {
+    case CHART_DATA_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case CHART_DATA_SUCCESS:
+      return {
+        loading: false,
+        dates: action.payload.dates,
+        amounts: action.payload.amounts,
+      }
+    case CHART_DATA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
     default:
       return state
   }

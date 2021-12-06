@@ -18,6 +18,7 @@ import {
   bookingListMyReducer,
   bookingListReducer,
   bookingDeleteReducer,
+  chartDataReducer,
 } from './reducers/bookingReducer'
 import { stripePayReducer } from './reducers/stripeReducers'
 import {
@@ -50,6 +51,7 @@ const reducer = combineReducers({
   bookingListMy: bookingListMyReducer,
   bookingList: bookingListReducer,
   bookingDelete: bookingDeleteReducer,
+  chartData: chartDataReducer,
   storage: storageReducer,
   stripePay: stripePayReducer,
 })
