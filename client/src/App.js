@@ -17,6 +17,7 @@ import BookingListScreen from './screens/BookingListScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import UserEditScreen from './screens/UserEditScreen'
 import RoomEditScreen from './screens/RoomEditScreen'
+import ChartScreen from './screens/ChartScreen'
 
 const App = () => {
   return (
@@ -102,6 +103,11 @@ const App = () => {
             <Route
               path="/admin/bookinglist/search/:keyword/page/:pageNumber"
               component={BookingListScreen}
+              exact
+            />
+            <Route
+              path="/admin/chart"
+              component={ChartScreen}
               exact
             />
             <Route component={NotFoundScreen} />
