@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react'
-import {useSelector} from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import Meta from '../components/Meta'
 
-const ChartScreen = () => {
+const ChartScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin)
-  const {userInfo} = userLogin
+  const { userInfo } = userLogin
 
   useEffect(() => {
     if (!userInfo && !userInfo.isAdmin) {
@@ -14,16 +14,10 @@ const ChartScreen = () => {
 
   return (
     <>
-      <h2>Chart</h2>
-      <Meta title="Admin Statistic"/>
+      <h2>ChartScreen</h2>
+      <Meta title="Admin Statistic" />
     </>
   )
 }
 
 export default ChartScreen
-
-
-
-
-
-

@@ -22,6 +22,7 @@ import { BOOKING_PAY_RESET } from '../constants/bookingConstants'
 import { loadStripe } from '@stripe/stripe-js'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { LinkContainer } from 'react-router-bootstrap'
 
 AOS.init({
   duration: '1000',
@@ -187,17 +188,21 @@ const BookingScreenStripe = ({ match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <Row className="al-content-box al-box-shadow" data-aos="zoom-in">
-          <Col sm={12} className="d-flex justify-content-between mb-1">
-            <h3>Booking {booking._id.toUpperCase()}</h3>
-            <Button
-              className="btn"
-              onClick={() => {
-                history.goBack()
-              }}
-            >
-              Go Back
-            </Button>
-          </Col>
+          <Row className="align-items-center mb-1">
+            <Col>
+              <h2>Booking {booking._id.substring(12).toUpperCase()}</h2>
+            </Col>
+            <Col style={{ textAlign: 'right' }}>
+              <Button
+                className="btn"
+                onClick={() => {
+                  history.goBack()
+                }}
+              >
+                Go Back
+              </Button>
+            </Col>
+          </Row>
           <Col md={7}>
             <ListGroup variant="flush">
               <ListGroup.Item>

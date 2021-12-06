@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -43,8 +43,17 @@ const BookingListScreen = ({ history, match }) => {
 
   return (
     <>
-      <h2>Bookings</h2>
       <Meta title="Admin Bookings" />
+      <Row className="align-items-center">
+        <Col>
+          <h2>Bookings</h2>
+        </Col>
+        <Col style={{ textAlign: 'right' }}>
+          <LinkContainer to={'/admin/chart'}>
+            <Button className="my-3">Chart</Button>
+          </LinkContainer>
+        </Col>
+      </Row>
       {loading ? (
         <Loader />
       ) : error ? (
