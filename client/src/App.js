@@ -17,7 +17,7 @@ import BookingListScreen from './screens/BookingListScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import UserEditScreen from './screens/UserEditScreen'
 import RoomEditScreen from './screens/RoomEditScreen'
-import ChartScreen from './screens/ChartScreen'
+import StatisticScreen from './screens/StatisticScreen'
 
 const App = () => {
   return (
@@ -105,11 +105,7 @@ const App = () => {
               component={BookingListScreen}
               exact
             />
-            <Route
-              path="/admin/chart"
-              component={ChartScreen}
-              exact
-            />
+            <Route path="/admin/chart" component={StatisticScreen} exact />
             <Route component={NotFoundScreen} />
           </Switch>
         </Container>

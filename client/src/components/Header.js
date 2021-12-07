@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route, Location, useLocation } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import AdminSearchBox from './AdminSearchBox'

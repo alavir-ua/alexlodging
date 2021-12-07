@@ -173,13 +173,13 @@ const deleteBooking = asyncHandler(async (req, res) => {
 const getChartData = asyncHandler(async (req, res) => {
   /*get data for the last month */
 
-  // const now = new Date()
-  // const temp = new Date(now).setMonth(now.getMonth() - 1)
-  // const priorOne = new Date(temp)
+  const now = new Date()
+  const temp = new Date(now).setMonth(now.getMonth() - 1)
+  const priorOne = new Date(temp)
 
   const bookings = await Booking.find({
     isPaid: true,
-    /*paidAt: { $gte: priorOne, $lt: new Date() },*/
+    paidAt: { $gte: priorOne, $lt: new Date() },
   }).sort({ paidAt: 1 })
 
   if (bookings) {

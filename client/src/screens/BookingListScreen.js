@@ -50,7 +50,7 @@ const BookingListScreen = ({ history, match }) => {
         </Col>
         <Col style={{ textAlign: 'right' }}>
           <LinkContainer to={'/admin/chart'}>
-            <Button className="my-3">Chart</Button>
+            <Button className="my-3">Payment statistic</Button>
           </LinkContainer>
         </Col>
       </Row>
