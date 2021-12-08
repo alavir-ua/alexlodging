@@ -1,6 +1,10 @@
 {
   "name": "alexlodging",
   "version": "1.0.0",
+	"engines": {
+		"node": "14.x",
+		"npm": "8.x"
+	},
   "description": "Room booking web application built using the MERN stack",
   "main": "server/index.js",
   "type": "module",
